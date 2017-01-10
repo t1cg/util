@@ -42,7 +42,7 @@ func (ec *Cml) GetPrefix(prefix string, kvCh chan map[string]string, aeCh chan *
 	fname := logger.GetFuncName()
 
 	//performance analysis - begin
-	trace := &runstat.RunInfo{Name: fname, CPUCount: runstat.CPUCount, StartTime: time.Now()}
+	trace := &runstat.RunInfo{Name: fname, StartTime: time.Now()}
 	defer trace.MeasureRuntime()
 
 	//set the argument
@@ -146,7 +146,7 @@ func (ec *Cml) HasPrefix(prefix string, hasCh chan bool, aeCh chan *apperror.App
 	l := logger.L
 
 	//performance analysis - begin
-	trace := &runstat.RunInfo{Name: fname, CPUCount: runstat.CPUCount, StartTime: time.Now()}
+	trace := &runstat.RunInfo{Name: fname, StartTime: time.Now()}
 	defer trace.MeasureRuntime()
 
 	//set the argument
