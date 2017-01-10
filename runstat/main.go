@@ -93,7 +93,6 @@ func (r *LoadAsyncInfo) SetEndTime(t time.Time) {
 // RunInfo defines a model for a CPU's runtime
 type RunInfo struct {
 	Name      string
-	CPUCount  int
 	StartTime time.Time
 	EndTime   time.Time
 }
@@ -103,7 +102,7 @@ var _ MeasureRuntimer = (*RunInfo)(nil)
 
 // MeasureRuntime prints a string containing the runtime information
 func (r *RunInfo) MeasureRuntime() {
-	logger.L.Perf.Printf("%v runtime[%v] on cpus[%d] ", strings.TrimSpace(r.Name), r.EndTime.Sub(r.StartTime), r.CPUCount)
+	logger.L.Perf.Printf("%v runtime[%v] on cpus[%d] ", strings.TrimSpace(r.Name), r.EndTime.Sub(r.StartTime), CPUCount)
 }
 
 // SetEndTime function sets the end time of the run.
