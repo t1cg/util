@@ -26,6 +26,9 @@ var (
 		"runtime.goexit",
 		"runtime.main",
 		//"testing.tRunner",
+		"http.(*conn).serve",
+		"http.(*ServeMux).ServeHTTP",
+		"http.serverHandler.ServeHTTP",
 		".1",
 	}
 
