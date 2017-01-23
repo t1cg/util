@@ -24,13 +24,119 @@ const (
 
 //global
 var (
-	errorEtcdServiceDidNotReturnExpectedPrefix = errors.New("Etcd service did not return the expected prefixes")
-	errorEtcdReturnedMisMatchedPair            = errors.New("Etcd service returned a mis matched key/value pair")
+	errorEtcdServiceDidNotReturnExpectedPrefix  = errors.New("Etcd service did not return the expected prefixes")
+	errorEtcdReturnedMisMatchedPair             = errors.New("Etcd service returned a mis matched key/value pair")
+	errorEtcdReturnedKeyDoesNotMatchProvidedKey = errors.New("Etcd service returned key does not match the provided key")
 )
 
 // Cml struct defines the method that calls the etcd service using the etcdctl
 // command line interface.
 type Cml struct{}
+
+// GetValue function runs the command to get the key value pair.
+// 1) The "etcdctl" must be in path.
+// 2) the environment variable, ETCDCTL_API=3, must be set
+func (ec *Cml) GetValue(key string, valueCh chan string, aeCh chan *apperror.AppInfo) {
+
+	//get the caller and callee (if any) function names
+	fname := logger.GetFuncName()
+
+	//performance analysis - begin
+	trace := &runstat.RunInfo{Name: fname, StartTime: time.Now()}
+	defer trace.MeasureRuntime()
+
+	//set the argument
+	args := []string{etcdctlGet, key}
+
+	//set the command & args
+	c := exec.Command(etcdctlCmd, args...)
+
+	//connect pipe to standard error when the command starts
+	stderr, err := c.StderrPipe()
+	if err != nil {
+		a := &apperror.AppInfo{Msg: err}
+		a.LogError(a.Error())
+		trace.SetEndTime(time.Now())
+		aeCh <- a
+		return
+	}
+
+	//connect pipe to standard out when the command starts
+	stdout, err := c.StdoutPipe()
+	if err != nil {
+		a := &apperror.AppInfo{Msg: err}
+		a.LogError(a.Error())
+		trace.SetEndTime(time.Now())
+		aeCh <- a
+		return
+	}
+
+	err = c.Start()
+	if err != nil {
+		a := &apperror.AppInfo{Msg: err}
+		a.LogError(a.Error())
+		trace.SetEndTime(time.Now())
+		aeCh <- a
+		return
+	}
+
+	//parse the stderr if any
+	errReader := bufio.NewReader(stderr)
+	errStr, _ := errReader.ReadString('\n')
+
+	if len(errStr) > 0 {
+		a := &apperror.AppInfo{Msg: errors.New(strings.TrimSpace(errStr))}
+		a.LogError(a.Error())
+		trace.SetEndTime(time.Now())
+		aeCh <- a
+		return
+	}
+
+	//parse the stdout; read each line
+	lineCount := 0
+	value := ""
+
+	scanner := bufio.NewScanner(stdout)
+	for scanner.Scan() {
+		line := scanner.Text()
+
+		lineCount++
+
+		switch lineCount {
+		case 1:
+			if line != key {
+				a := &apperror.AppInfo{Msg: errorEtcdReturnedKeyDoesNotMatchProvidedKey}
+				a.LogError(a.Error())
+				trace.SetEndTime(time.Now())
+				aeCh <- a
+				return
+			}
+		case 2:
+			value = line
+			break
+		}
+	}
+
+	switch {
+	case lineCount == 0:
+		a := &apperror.AppInfo{Msg: errorEtcdServiceDidNotReturnExpectedPrefix}
+		a.LogError(a.Error())
+		trace.SetEndTime(time.Now())
+		aeCh <- a
+		return
+	case lineCount > 2:
+		a := &apperror.AppInfo{Msg: errorEtcdReturnedMisMatchedPair}
+		a.LogError(a.Error())
+		trace.SetEndTime(time.Now())
+		aeCh <- a
+		return
+	}
+
+	//performance analysis - end
+	trace.SetEndTime(time.Now())
+
+	valueCh <- value
+}
 
 // GetPrefix function runs the command to see if the etcd service is running and
 // in good health. The following must be set correctly:
