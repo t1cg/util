@@ -7,7 +7,9 @@ import (
 )
 
 const (
-	PREFIX = "mpp"
+	testPrefix   = "mpp"
+	testKey      = "mpp.api.endpoint.host"
+	testKeyBlank = ""
 )
 
 func TestGetPrefix(t *testing.T) {
@@ -20,7 +22,7 @@ func TestGetPrefix(t *testing.T) {
 
 	ec := Cml{}
 
-	go ec.GetPrefix(PREFIX, kv, ae)
+	go ec.GetPrefix(testPrefix, kv, ae)
 	select {
 	case a := <-ae:
 		t.Error(FUNCNAME+" ERROR:", a.Msg)
@@ -34,22 +36,44 @@ func TestGetPrefix(t *testing.T) {
 	t.Log(FUNCNAME + " complete")
 }
 
+func TestGetValue(t *testing.T) {
+	FUNCNAME := "TestGetValue()"
+
+	t.Log(FUNCNAME + " calling...")
+
+	valueCh := make(chan string)
+	aeCh := make(chan *apperror.AppInfo)
+
+	ec := Cml{}
+
+	go ec.GetValue(testKeyBlank, valueCh, aeCh)
+	select {
+	case a := <-aeCh:
+		t.Error(FUNCNAME+" ERROR:", a.Msg)
+		return
+	case value := <-valueCh:
+		t.Logf("key[%s], value[%s]", testKey, value)
+	}
+
+	t.Log(FUNCNAME + " complete")
+}
+
 func TestHasPrefix(t *testing.T) {
 	FUNCNAME := "TestHasPrefix()"
 
 	t.Log(FUNCNAME + " calling...")
 
-	has := make(chan bool)
-	ae := make(chan *apperror.AppInfo)
+	hasCh := make(chan bool)
+	aeCh := make(chan *apperror.AppInfo)
 
 	ec := Cml{}
 
-	go ec.HasPrefix(PREFIX, has, ae)
+	go ec.HasPrefix(testPrefix, hasCh, aeCh)
 	select {
-	case a := <-ae:
+	case a := <-aeCh:
 		t.Error(FUNCNAME+" ERROR:", a.Msg)
 		return
-	case <-has:
+	case <-hasCh:
 		t.Log(FUNCNAME + " has prefix!")
 	}
 
