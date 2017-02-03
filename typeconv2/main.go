@@ -2,6 +2,7 @@ package typeconv2
 
 import (
 	"bytes"
+	"fmt"
 	"strconv"
 	"strings"
 	//t1cg util library
@@ -21,35 +22,21 @@ func DollarToInt(raw string) int {
 	return i
 }
 
-// DollarToInt64 function strips all the characters from the dollar amount.
-func DollarToInt64(raw string) int64 {
-
-	i, err := strconv.ParseInt(replace(raw, "dollar"), 10, 64)
-	if err != nil {
-		a := &apperror.AppInfo{Msg: err}
-		a.LogError(err.Error())
-		i = 0
-	}
-
-	return i
-}
-
 // ToFloat function converts string to int.
 func ToFloat(raw string) float64 {
 
-	i, err := strconv.ParseFloat(replace(raw, "float"), 64)
+	f, err := strconv.ParseFloat(replace(raw, "float"), 64)
 	if err != nil {
 		a := &apperror.AppInfo{Msg: err}
 		a.LogError(err.Error())
-		i = 0.00
+		f = 0.00
 	}
 
-	return i
+	return f
 }
 
 // ToInt function converts string to int.
 func ToInt(raw string) int {
-
 	i, err := strconv.Atoi(replace(raw, "int"))
 	if err != nil {
 		i = 0
@@ -58,7 +45,7 @@ func ToInt(raw string) int {
 	return i
 }
 
-// ToInt64 function converts string to int.
+// ToInt64 function converts string to int64.
 func ToInt64(raw string) int64 {
 
 	i, err := strconv.ParseInt(replace(raw, "int"), 10, 64)
@@ -69,17 +56,27 @@ func ToInt64(raw string) int64 {
 	return i
 }
 
-// ToDollar function ...
-func ToDollar(number interface{}) string {
+// ToDollar function expects either an int, int64, float64 or an interface, and
+// returns a string with a dollar sign and 2 decimal places.
+// The input is assumed to have the decimal stripped previously. For example, 100 is
+// understood to be $1.00
+// Input type float64 is NOT expected; the code is there just in case.
+func ToDollar(raw interface{}) string {
 	var s, first, last, final string
 
-	switch t := number.(type) {
+	switch t := raw.(type) {
 	case int:
 		s = strconv.Itoa(t)
 	case int64:
 		s = strconv.FormatInt(t, 10)
+	case float64:
+		s = strconv.FormatFloat(t, 'f', 2, 64)
 	default:
-		s = number.(string)
+		s = replace(raw.(string), "dollar")
+
+		if _, err := strconv.Atoi(s); err != nil {
+			s = ""
+		}
 	}
 
 	switch len(s) {
@@ -90,31 +87,68 @@ func ToDollar(number interface{}) string {
 	case 2:
 		final = "$0." + s
 	default:
-		first = s[0 : len(s)-2]
-		last = s[len(s)-2:]
+		if strings.Contains(s, ".") {
+			final = s
+		} else {
+			first = s[0 : len(s)-2]
+			last = s[len(s)-2:]
 
-		final = ToThousand(first, true) + "." + last
+			final = ToThousand(first, true) + "." + last
+		}
 	}
 
 	return final
 }
 
-// ToThousand function formats the number and returns a string with
-// thousands comma.
-func ToThousand(number interface{}, dollar bool) string {
+// ToDecimal function expects either a string or a float64, and returns a
+// string with 2 decimal position.
+// If input is nil, simply return a blank string.
+func ToDecimal(raw interface{}) string {
+	var s string
+
+	switch t := raw.(type) {
+	case float64:
+		s = strconv.FormatFloat(t, 'f', 2, 64)
+	case interface{}:
+		s = replace(raw.(string), "float")
+	default:
+		s = ""
+	}
+
+	if len(s) > 0 {
+		var f, l string
+
+		f = s[0 : len(s)-3]
+		l = s[len(s)-2:]
+
+		if len(f) > 3 {
+			t := ToThousand(f, false)
+			fmt.Println("t:", t)
+
+			s = t + "." + l
+		}
+	}
+
+	return s
+}
+
+// ToThousand function expects either int, int64, or an interface; and formats
+// the number and returns a string with thousands comma.
+func ToThousand(raw interface{}, dollar bool) string {
 	var s string
 	var buff bytes.Buffer
 	var index int
 
-	switch t := number.(type) {
+	switch t := raw.(type) {
 	case int:
 		s = strconv.Itoa(t)
 	case int64:
 		s = strconv.FormatInt(t, 10)
-	case string:
-		s = number.(string)
+	case interface{}:
+		s = raw.(string)
+	//when nil
 	default:
-		return ""
+		s = ""
 	}
 
 	//add dollar sign if checked
@@ -152,9 +186,9 @@ func replace(raw string, replaceType string) string {
 
 	switch replaceType {
 	case "dollar":
-		if !strings.Contains(raw, ".") {
-			raw = raw + "00"
-		}
+		//if !strings.Contains(raw, ".") {
+		//	raw = raw + "00"
+		//}
 
 		//set up replacer; remove extras
 		s := strings.NewReplacer(" ", "", "$", "", ",", "", "*", "", "#", "", ".", "", "%", "")
