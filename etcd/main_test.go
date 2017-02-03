@@ -7,10 +7,41 @@ import (
 )
 
 const (
-	testPrefix   = "mpp"
-	testKey      = "mpp.api.endpoint.host"
-	testKeyBlank = ""
+	testPrefix     = "mpp"
+	testKey        = "mpp.api.endpoint.host"
+	testValue      = "testKeyValue"
+	testPrefixFail = "fail"
+	testKeyFail    = "different"
+	testKeyBlank   = "blank"
 )
+
+func TestNotStarted(t *testing.T) {
+	FUNCNAME := "TestNotStarted"
+
+	t.Log(FUNCNAME + " calling...")
+
+	kv := make(chan map[string]string)
+	ae := make(chan *apperror.AppInfo)
+
+	ec := Cml{}
+
+	go ec.GetPrefix(testPrefix, kv, ae)
+	select {
+	case a := <-ae:
+		t.Log(FUNCNAME+" EXPECTED ERROR  ETCD NOT RUNNING: ", a.Msg)
+		go startService()
+		go putValue(testKey, testValue)
+		go putValue(testKeyBlank, testKeyFail)
+		return
+	case kvs := <-kv:
+		for k, v := range kvs {
+			t.Errorf("ERROR: etcd already running: key[%s], value[%s]", k, v)
+
+		}
+	}
+
+	t.Log(FUNCNAME + " complete")
+}
 
 func TestGetPrefix(t *testing.T) {
 	FUNCNAME := "TestGetPrefix()"
@@ -36,6 +67,30 @@ func TestGetPrefix(t *testing.T) {
 	t.Log(FUNCNAME + " complete")
 }
 
+func TestGetPrefixFail(t *testing.T) {
+	FUNCNAME := "TestGetPrefixFail()"
+
+	t.Log(FUNCNAME + " calling...")
+
+	kv := make(chan map[string]string)
+	ae := make(chan *apperror.AppInfo)
+
+	ec := Cml{}
+
+	go ec.GetPrefix(testPrefixFail, kv, ae)
+	select {
+	case a := <-ae:
+		t.Log(FUNCNAME+" EXPECTED ERROR:", a.Msg)
+		return
+	case kvs := <-kv:
+		for k, v := range kvs {
+			t.Errorf("No keys expected, Returned: key[%s], value[%s]", k, v)
+		}
+	}
+
+	t.Log(FUNCNAME + " complete")
+}
+
 func TestGetValue(t *testing.T) {
 	FUNCNAME := "TestGetValue()"
 
@@ -46,13 +101,57 @@ func TestGetValue(t *testing.T) {
 
 	ec := Cml{}
 
-	go ec.GetValue(testKeyBlank, valueCh, aeCh)
+	go ec.GetValue(testKey, valueCh, aeCh)
 	select {
 	case a := <-aeCh:
 		t.Error(FUNCNAME+" ERROR:", a.Msg)
 		return
 	case value := <-valueCh:
 		t.Logf("key[%s], value[%s]", testKey, value)
+	}
+
+	t.Log(FUNCNAME + " complete")
+}
+
+func TestGetValueFail(t *testing.T) {
+	FUNCNAME := "TestGetValueFail()"
+
+	t.Log(FUNCNAME + " calling...")
+
+	valueCh := make(chan string)
+	aeCh := make(chan *apperror.AppInfo)
+
+	ec := Cml{}
+
+	go ec.GetValue(testPrefixFail, valueCh, aeCh)
+	select {
+	case a := <-aeCh:
+		t.Log(FUNCNAME+"  EXPECTED ERROR: ", a.Msg)
+		return
+	case value := <-valueCh:
+		t.Errorf("No key expected Returned: key[%s], value[%s]", testKey, value)
+	}
+
+	t.Log(FUNCNAME + " complete")
+}
+
+func TestGetValueFailPair(t *testing.T) {
+	FUNCNAME := "TestGetValueFailPair()"
+
+	t.Log(FUNCNAME + " calling...")
+
+	valueCh := make(chan string)
+	aeCh := make(chan *apperror.AppInfo)
+
+	ec := Cml{}
+
+	go ec.GetValue(testPrefixFail, valueCh, aeCh)
+	select {
+	case a := <-aeCh:
+		t.Log(FUNCNAME+"  EXPECTED ERROR: ", a.Msg)
+		return
+	case value := <-valueCh:
+		t.Errorf("No key expected Returned: key[%s], value[%s]", testKey, value)
 	}
 
 	t.Log(FUNCNAME + " complete")
@@ -76,6 +175,37 @@ func TestHasPrefix(t *testing.T) {
 	case <-hasCh:
 		t.Log(FUNCNAME + " has prefix!")
 	}
+
+	t.Log(FUNCNAME + " complete")
+}
+
+func TestHasPrefixFail(t *testing.T) {
+	FUNCNAME := "TestHasPrefix()"
+
+	t.Log(FUNCNAME + " calling...")
+
+	hasCh := make(chan bool)
+	aeCh := make(chan *apperror.AppInfo)
+
+	ec := Cml{}
+
+	go ec.HasPrefix(testPrefixFail, hasCh, aeCh)
+	select {
+	case a := <-aeCh:
+		t.Log(FUNCNAME+" EXPECTED ERROR:", a.Msg)
+		return
+	case <-hasCh:
+		t.Error(FUNCNAME + " has UNEXPECTED prefix!")
+	}
+
+	t.Log(FUNCNAME + " complete")
+}
+
+func TestStop(t *testing.T) {
+	FUNCNAME := "TestStop()"
+	t.Log(FUNCNAME + " calling...")
+
+	stopService()
 
 	t.Log(FUNCNAME + " complete")
 }

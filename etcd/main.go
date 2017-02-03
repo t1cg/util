@@ -15,11 +15,14 @@ import (
 
 //etcdctl terminal commands
 const (
+	etcdStart       string = "etcd"
 	etcdctlCmd      string = "etcdctl"
 	etcdctlEndpoint string = "endpoint"
 	etcdctlGet      string = "get"
+	etcdctlPut      string = "put"
 	etcdctlHealth   string = "health"
 	etcdctlPrefix   string = "--prefix"
+	etcdStop        string = "pkill"
 )
 
 //global
@@ -32,6 +35,36 @@ var (
 // Cml struct defines the method that calls the etcd service using the etcdctl
 // command line interface.
 type Cml struct{}
+
+//function to start the etcd service during testing
+func startService() {
+	c := exec.Command(etcdStart)
+
+	c.Start()
+}
+
+//function to kill the etcd service after testing completes
+func stopService() {
+	c := exec.Command(etcdStop, etcdStart)
+
+	c.Start()
+}
+
+//function to assign key and values for testing
+func putValue(key string, value string) {
+	fname := logger.GetFuncName()
+
+	trace := &runstat.RunInfo{Name: fname, StartTime: time.Now()}
+	defer trace.MeasureRuntime()
+
+	args := []string{etcdctlPut, key, value}
+
+	//set the command & args
+	c := exec.Command(etcdctlCmd, args...)
+
+	c.Start()
+
+}
 
 // GetValue function runs the command to get the key value pair.
 // 1) The "etcdctl" must be in path.
@@ -101,31 +134,11 @@ func (ec *Cml) GetValue(key string, valueCh chan string, aeCh chan *apperror.App
 		line := scanner.Text()
 
 		lineCount++
-
-		switch lineCount {
-		case 1:
-			if line != key {
-				a := &apperror.AppInfo{Msg: errorEtcdReturnedKeyDoesNotMatchProvidedKey}
-				a.LogError(a.Error())
-				trace.SetEndTime(time.Now())
-				aeCh <- a
-				return
-			}
-		case 2:
-			value = line
-			break
-		}
+		value = line
 	}
 
-	switch {
-	case lineCount == 0:
+	if lineCount == 0 {
 		a := &apperror.AppInfo{Msg: errorEtcdServiceDidNotReturnExpectedPrefix}
-		a.LogError(a.Error())
-		trace.SetEndTime(time.Now())
-		aeCh <- a
-		return
-	case lineCount > 2:
-		a := &apperror.AppInfo{Msg: errorEtcdReturnedMisMatchedPair}
 		a.LogError(a.Error())
 		trace.SetEndTime(time.Now())
 		aeCh <- a
@@ -219,15 +232,8 @@ func (ec *Cml) GetPrefix(prefix string, kvCh chan map[string]string, aeCh chan *
 		}
 	}
 
-	switch {
-	case prefixCount == 0:
+	if prefixCount == 0 {
 		a := &apperror.AppInfo{Msg: errorEtcdServiceDidNotReturnExpectedPrefix}
-		a.LogError(a.Error())
-		trace.SetEndTime(time.Now())
-		aeCh <- a
-		return
-	case prefixCount%2 != 0:
-		a := &apperror.AppInfo{Msg: errorEtcdReturnedMisMatchedPair}
 		a.LogError(a.Error())
 		trace.SetEndTime(time.Now())
 		aeCh <- a
@@ -315,14 +321,6 @@ func (ec *Cml) HasPrefix(prefix string, hasCh chan bool, aeCh chan *apperror.App
 
 	l.Info.Printf("%v prefix count: %v", fname, prefixCount)
 	l.Info.Printf("%v number of KVs: %v", fname, numOfKV)
-
-	if prefixCount%2 != 0 {
-		a := &apperror.AppInfo{Msg: errorEtcdReturnedMisMatchedPair}
-		a.LogError(a.Error())
-		trace.SetEndTime(time.Now())
-		aeCh <- a
-		return
-	}
 
 	if numOfKV == 0 {
 		a := &apperror.AppInfo{Msg: errorEtcdServiceDidNotReturnExpectedPrefix}
