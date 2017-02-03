@@ -6,53 +6,33 @@ import (
 	"strconv"
 	"strings"
 	//t1cg util library
-	"github.com/t1cg/util/apperror"
 )
 
 // DollarToInt function strips all the characters from the dollar amount.
 func DollarToInt(raw string) int {
 
-	i, err := strconv.Atoi(replace(raw, "dollar"))
-	if err != nil {
-		a := &apperror.AppInfo{Msg: err}
-		a.LogError(err.Error())
-		i = 0
-	}
-
+	i, _ := strconv.Atoi(replace(raw, "dollar"))
 	return i
 }
 
 // ToFloat function converts string to int.
 func ToFloat(raw string) float64 {
 
-	f, err := strconv.ParseFloat(replace(raw, "float"), 64)
-	if err != nil {
-		a := &apperror.AppInfo{Msg: err}
-		a.LogError(err.Error())
-		f = 0.00
-	}
-
+	f, _ := strconv.ParseFloat(replace(raw, "float"), 64)
 	return f
+
 }
 
 // ToInt function converts string to int.
 func ToInt(raw string) int {
-	i, err := strconv.Atoi(replace(raw, "int"))
-	if err != nil {
-		i = 0
-	}
-
+	i, _ := strconv.Atoi(replace(raw, "int"))
 	return i
 }
 
 // ToInt64 function converts string to int64.
 func ToInt64(raw string) int64 {
 
-	i, err := strconv.ParseInt(replace(raw, "int"), 10, 64)
-	if err != nil {
-		i = 0
-	}
-
+	i, _ := strconv.ParseInt(replace(raw, "int"), 10, 64)
 	return i
 }
 
@@ -71,12 +51,11 @@ func ToDollar(raw interface{}) string {
 		s = strconv.FormatInt(t, 10)
 	case float64:
 		s = strconv.FormatFloat(t, 'f', 2, 64)
-	default:
+	case interface{}:
 		s = replace(raw.(string), "dollar")
-
-		if _, err := strconv.Atoi(s); err != nil {
-			s = ""
-		}
+	//when nil
+	default:
+		s = ""
 	}
 
 	switch len(s) {
