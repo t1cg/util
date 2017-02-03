@@ -9,6 +9,7 @@ _test
 logs
 test
 etcd/default.etcd
+etcdv2/default.etcd
 
 # Architecture specific extensions/prefixes
 *.[568vq]
