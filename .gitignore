@@ -8,6 +8,9 @@ _obj
 _test
 logs
 test
+etcd/default.etcd
+etcdv2/default.etcd
+.DS_Store
 
 # Architecture specific extensions/prefixes
 *.[568vq]
