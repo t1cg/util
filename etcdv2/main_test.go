@@ -37,7 +37,7 @@ func TestGetTheValue(t *testing.T) {
 	ae := make(chan *apperror.AppInfo)
 	kv := make(chan map[string]string)
 
-	go GetTheValue("test", "success", kv, ae)
+	go GetTheValue("test", kv, ae)
 
 	select {
 	case a := <-ae:
@@ -45,7 +45,7 @@ func TestGetTheValue(t *testing.T) {
 		return
 	case kvs := <-kv:
 		for k, v := range kvs {
-			t.Logf("key[%s], value[%s]", k, v)
+			t.Logf("key:[%s] value:[%s]", k, v)
 		}
 	}
 
@@ -82,7 +82,7 @@ func TestGetThePrefix(t *testing.T) {
 
 	prefix := "mpp"
 	ae := make(chan *apperror.AppInfo)
-	kv := make(chan map[string]string)
+	kv := make(chan map[string]string, 10)
 
 	go GetThePrefix(prefix, kv, ae)
 
@@ -92,10 +92,10 @@ func TestGetThePrefix(t *testing.T) {
 		return
 	case kvs := <-kv:
 		for k, v := range kvs {
-			t.Logf("key[%s], value[%s]", k, v)
+			t.Logf("key:[%s] value:[%s]\n", k, v)
 		}
 	}
-
+	t.Log(FUNCNAME + " complete")
 }
 
 func TestStopService(t *testing.T) {

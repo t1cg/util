@@ -8,6 +8,12 @@ import (
 
 const (
 	testPrefix     = "mpp"
+	pre2           = "mpp_2"
+	pre2Val        = "mppval_2"
+	pre3           = "mpp_3"
+	pre3Val        = "mppval_3"
+	pre4           = "mpp_4"
+	pre4Val        = "mppval_4"
 	testKey        = "mpp.api.endpoint.host"
 	testValue      = "testKeyValue"
 	testPrefixFail = "fail"
@@ -31,7 +37,10 @@ func TestNotStarted(t *testing.T) {
 		t.Log(FUNCNAME+" EXPECTED ERROR  ETCD NOT RUNNING: ", a.Msg)
 		go startService()
 		go putValue(testKey, testValue)
+		go putValue(pre2, pre2Val)
 		go putValue(testKeyBlank, testKeyFail)
+		go putValue(pre3, pre3Val)
+		go putValue(pre4, pre4Val)
 		return
 	case kvs := <-kv:
 		for k, v := range kvs {

@@ -17,21 +17,22 @@ const (
 	etcdStop  string = "pkill"
 )
 
-//function to start the etcd service during testing
+//startService starts the ETCD service
 func startService() {
 	c := exec.Command(etcdStart)
 
 	c.Start()
 }
 
-//function to kill the etcd service after testing completes
+//stopService stops the ETCD service after testing is complete
 func stopService() {
 	c := exec.Command(etcdStop, etcdStart)
 
 	c.Start()
 }
 
-//PutTheValue takes in key value pairs and assigns them
+//PutTheValue takes in key value pairs and assigns them through the ETCD
+//service.
 func PutTheValue(key []string, value []string, aeCh chan *apperror.AppInfo) {
 
 	cli, err := clientv3.New(clientv3.Config{
@@ -58,11 +59,10 @@ func PutTheValue(key []string, value []string, aeCh chan *apperror.AppInfo) {
 			return
 		}
 	}
-
 }
 
-//GetTheValue function to get the value for a specific key
-func GetTheValue(key string, value string, valueCh chan map[string]string, aeCh chan *apperror.AppInfo) {
+//GetTheValue returns the value for a chosen key that is entered as a parameter.
+func GetTheValue(key string, valueCh chan map[string]string, aeCh chan *apperror.AppInfo) {
 
 	cli, err := clientv3.New(clientv3.Config{
 		Endpoints:   []string{"localhost:2379"},
@@ -99,7 +99,7 @@ func GetTheValue(key string, value string, valueCh chan map[string]string, aeCh 
 	}
 }
 
-// GetThePrefix function to get all keys with a common prefix
+//GetThePrefix returns all Key-Value pairs that begin with a common prefix.
 func GetThePrefix(prefix string, valueCh chan map[string]string, aeCh chan *apperror.AppInfo) {
 
 	cli, err := clientv3.New(clientv3.Config{
@@ -128,13 +128,9 @@ func GetThePrefix(prefix string, valueCh chan map[string]string, aeCh chan *appe
 		aeCh <- a
 		return
 	}
+	var finalKv = make(map[string]string)
 	for _, ev := range resp.Kvs {
-		fmt.Printf("%s : %s\n", ev.Key, ev.Value)
-
-		var finalKv = make(map[string]string)
 		finalKv[string(ev.Key)] = string(ev.Value)
-
-		valueCh <- finalKv
 	}
-
+	valueCh <- finalKv
 }
