@@ -22,7 +22,7 @@ func TestPutTheValue(t *testing.T) {
 
 	t.Log(FUNCNAME + " Calling...")
 
-	keys := []string{"mpp", "mpp8", "mpp3", "test", "key"}
+	keys := []string{"mpp", "mpp2", "mpp3", "test", "key"}
 	values := []string{"mppvalue", "mppvalue2", "mppvalue3", "testvalue", "keyvalue"}
 	ae := make(chan *apperror.AppInfo)
 

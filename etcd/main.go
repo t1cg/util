@@ -63,9 +63,6 @@ func putValue(key string, value string) {
 	c := exec.Command(etcdctlCmd, args...)
 
 	c.Start()
-
-	time.Sleep(900 * time.Millisecond)
-
 }
 
 // GetValue function runs the command to get the key value pair.
