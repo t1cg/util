@@ -82,7 +82,7 @@ func TestGetThePrefix(t *testing.T) {
 
 	prefix := "mpp"
 	ae := make(chan *apperror.AppInfo)
-	kv := make(chan map[string]string, 10)
+	kv := make(chan map[string]string)
 
 	go GetThePrefix(prefix, kv, ae)
 

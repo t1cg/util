@@ -119,7 +119,7 @@ func GetThePrefix(prefix string, valueCh chan map[string]string, aeCh chan *appe
 
 	ctx, cancel := context.WithTimeout(context.Background(), requestTimeout)
 
-	resp, err := cli.Get(ctx, prefix, clientv3.WithPrefix())
+	resp, err := cli.Get(ctx, prefix, clientv3.WithPrefix(), clientv3.WithSort(clientv3.SortByKey, clientv3.SortAscend))
 	cancel()
 	if err != nil {
 		log.Fatal(err)
