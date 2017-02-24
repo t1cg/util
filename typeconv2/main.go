@@ -23,17 +23,36 @@ func ToFloat(raw string) float64 {
 
 }
 
-// ToInt function converts string to int.
-func ToInt(raw string) int {
-	i, _ := strconv.Atoi(replace(raw, "int"))
-	return i
+// ToInt function converts interface to int.
+func ToInt(raw interface{}) int {
+	switch t := raw.(type) {
+	case int:
+		return t
+	case int64:
+		return int(t)
+	case string:
+		i, _ := strconv.Atoi(replace(raw.(string), "int"))
+		return i
+	//when nil
+	default:
+		return 0
+	}
 }
 
-// ToInt64 function converts string to int64.
-func ToInt64(raw string) int64 {
-
-	i, _ := strconv.ParseInt(replace(raw, "int"), 10, 64)
-	return i
+// ToInt64 function converts interface to int64.
+func ToInt64(raw interface{}) int64 {
+	switch t := raw.(type) {
+	case int:
+		return int64(t)
+	case int64:
+		return t
+	case string:
+		i, _ := strconv.ParseInt(replace(raw.(string), "int"), 10, 64)
+		return i
+	//when nil
+	default:
+		return 0
+	}
 }
 
 // ToDollar function expects either an int, int64, float64 or an interface, and

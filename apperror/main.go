@@ -12,12 +12,17 @@ type AppInfo struct {
 }
 
 // Error function returns a custom, parsed string; extends the standad Error() function.
-func (a AppInfo) Error() string {
+func (a AppInfo) Error(msg ...interface{}) string {
 
 	//get the caller and callee function names
 	fname := logger.GetFuncName()
 
+	if msg != nil {
+		return fmt.Sprintf("%v [message: %v, added message: %v]", fname, a.Msg.Error(), msg)
+	}
+
 	return fmt.Sprintf("%v [message: %v]", fname, a.Msg.Error())
+
 }
 
 // LogError function writes the error string to the stdout.

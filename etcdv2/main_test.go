@@ -6,103 +6,50 @@ import (
 	"github.com/t1cg/util/apperror"
 )
 
-func TestServiceRunning(t *testing.T) {
-	FUNCNAME := "TestServiceRuning"
+func TestGetValue(t *testing.T) {
+	FUNCNAME := "TestGetValue"
 
 	t.Log(FUNCNAME + " Calling...")
 
-	go startService()
+	ec := ClientV3{}
 
-	t.Log(FUNCNAME + " Complete")
+	aeCh := make(chan *apperror.AppInfo)
+	vCh := make(chan string)
 
-}
-
-func TestPutTheValue(t *testing.T) {
-	FUNCNAME := "TestPutTheValue"
-
-	t.Log(FUNCNAME + " Calling...")
-
-	keys := []string{"mpp", "mpp8", "mpp3", "test", "key"}
-	values := []string{"mppvalue", "mppvalue2", "mppvalue3", "testvalue", "keyvalue"}
-	ae := make(chan *apperror.AppInfo)
-
-	go PutTheValue(keys, values, ae)
-}
-
-func TestGetTheValue(t *testing.T) {
-	FUNCNAME := "TestGetTheValue"
-
-	t.Log(FUNCNAME + " Calling...")
-
-	ae := make(chan *apperror.AppInfo)
-	kv := make(chan map[string]string)
-
-	go GetTheValue("test", "success", kv, ae)
+	go ec.GetValue("mpp.loglevel", vCh, aeCh)
 
 	select {
-	case a := <-ae:
+	case a := <-aeCh:
 		t.Error(FUNCNAME+" ERROR:", a.Msg)
 		return
-	case kvs := <-kv:
-		for k, v := range kvs {
-			t.Logf("key[%s], value[%s]", k, v)
-		}
+	case value := <-vCh:
+		t.Logf("value[%v]", value)
 	}
 
 	t.Log(FUNCNAME + " Complete")
 
 }
 
-//  TestGetTheValueFail is currently not working, gets an index out of range and panics, need to look into
-// func TestGetTheValueFail(t *testing.T) {
-// 	FUNCNAME := "TestGetTheValueFail"
-
-// 	t.Log(FUNCNAME + " Calling...")
-
-// 	ae := make(chan *apperror.AppInfo)
-// 	kv := make(chan map[string]string)
-
-// 	go GetTheValue("failTest", "failure", kv, ae)
-
-// 	select {
-// 	case a := <-ae:
-// 		t.Log(FUNCNAME+" EXPECTED ERROR", a.Msg)
-// 		return
-// 	case kvs := <-kv:
-// 		for k, v := range kvs {
-// 			t.Errorf(FUNCNAME+" Unexpected key value FAIL"+"key[%s], value[%s]", k, v)
-// 		}
-// 	}
-// 	t.Log(FUNCNAME + " Complete")
-// }
-
-func TestGetThePrefix(t *testing.T) {
-	FUNCNAME := "TestGetThePrefix()"
+func TestGetPrefix(t *testing.T) {
+	FUNCNAME := "TestGetPrefix()"
 	t.Log(FUNCNAME + " Calling...")
+
+	ec := ClientV3{}
 
 	prefix := "mpp"
-	ae := make(chan *apperror.AppInfo)
-	kv := make(chan map[string]string)
+	aeCh := make(chan *apperror.AppInfo)
+	kvCh := make(chan map[string]string)
 
-	go GetThePrefix(prefix, kv, ae)
+	go ec.GetPrefix(prefix, kvCh, aeCh)
 
 	select {
-	case a := <-ae:
+	case a := <-aeCh:
 		t.Error(FUNCNAME+" ERROR:", a.Msg)
 		return
-	case kvs := <-kv:
+	case kvs := <-kvCh:
 		for k, v := range kvs {
 			t.Logf("key[%s], value[%s]", k, v)
 		}
 	}
 
-}
-
-func TestStopService(t *testing.T) {
-	FUNCNAME := "TestStopService()"
-	t.Log(FUNCNAME + " Calling...")
-
-	stopService()
-
-	t.Log(FUNCNAME + " Complete")
 }
