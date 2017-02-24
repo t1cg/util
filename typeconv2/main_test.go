@@ -44,21 +44,31 @@ func TestDollarToInt(t *testing.T) {
 func TestToInt(t *testing.T) {
 
 	t.Logf("running...")
+	var iInt int
+	var iInt64 int64
+	var ifaceInt, ifaceInt64, ifaceNil interface{}
 
-	test1 := "100 00 "
-	test2 := " *250"
+	iInt = 109
+	iInt64 = 1929292929390030003
+
 	test3 := "89,983, 899"
-	test4 := "#"
+	test4 := "#250*"
 
-	result1 := ToInt(test1)
-	result2 := ToInt(test2)
+	ifaceInt = iInt
+	ifaceInt64 = iInt64
+	ifaceNil = nil
+
+	result1 := ToInt(ifaceInt)
+	result2 := ToInt(ifaceInt64)
 	result3 := ToInt(test3)
 	result4 := ToInt(test4)
+	result5 := ToInt(ifaceNil)
 
-	t.Logf("test1[%v], result1[%v]", test1, result1)
-	t.Logf("test2[%v], result2[%v]", test2, result2)
+	t.Logf("test1[%v], result1[%v]", ifaceInt, result1)
+	t.Logf("test2[%v], result2[%v]", ifaceInt64, result2)
 	t.Logf("test3[%v], result3[%v]", test3, result3)
 	t.Logf("test4[%v], result4[%v]", test4, result4)
+	t.Logf("test5[%v], result5[%v]", ifaceNil, result5)
 
 	t.Logf("exiting")
 }
@@ -67,21 +77,31 @@ func TestToInt(t *testing.T) {
 func TestToInt64(t *testing.T) {
 
 	t.Logf("running...")
+	var iInt int
+	var iInt64 int64
+	var ifaceInt, ifaceInt64, ifaceNil interface{}
 
-	test1 := "100 00 "
-	test2 := " *250"
+	iInt = 109
+	iInt64 = 1929292929390030003
+
 	test3 := "89,983, 899"
-	test4 := "#"
+	test4 := "#250*"
 
-	result1 := ToInt64(test1)
-	result2 := ToInt64(test2)
+	ifaceInt = iInt
+	ifaceInt64 = iInt64
+	ifaceNil = nil
+
+	result1 := ToInt64(ifaceInt)
+	result2 := ToInt64(ifaceInt64)
 	result3 := ToInt64(test3)
 	result4 := ToInt64(test4)
+	result5 := ToInt64(ifaceNil)
 
-	t.Logf("test1[%v], result1[%v]", test1, result1)
-	t.Logf("test2[%v], result2[%v]", test2, result2)
+	t.Logf("test1[%v], result1[%v]", ifaceInt, result1)
+	t.Logf("test2[%v], result2[%v]", ifaceInt64, result2)
 	t.Logf("test3[%v], result3[%v]", test3, result3)
 	t.Logf("test4[%v], result4[%v]", test4, result4)
+	t.Logf("test5[%v], result5[%v]", ifaceNil, result5)
 
 	t.Logf("exiting")
 }
