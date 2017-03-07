@@ -11,6 +11,12 @@ import (
 // DollarToInt function strips all the characters from the dollar amount.
 func DollarToInt(raw string) int {
 
+	s := strings.Split(raw, ".")
+
+	if len(s) == 1 {
+		raw = raw + "00"
+	}
+
 	i, _ := strconv.Atoi(replace(raw, "dollar"))
 	return i
 }

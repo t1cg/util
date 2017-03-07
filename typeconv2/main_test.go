@@ -14,7 +14,7 @@ func TestDollarToInt(t *testing.T) {
 	test5 := "$10,900"
 	test6 := "$10,900.00"
 	test7 := "$10,900.10"
-	test8 := "#"
+	test8 := "10,900"
 	test9 := "~~"
 
 	result1 := DollarToInt(test1)
