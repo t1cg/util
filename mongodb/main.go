@@ -16,21 +16,25 @@ import (
 var Errors = struct {
 	DatabaseAggregatePipeFailed       error
 	DatabaseFindFailed                error
+	DatabaseFindAndApplyFailed        error
 	DatabaseIncorrectConnectionString error
 	DatabaseInsertFailed              error
 	DatabaseCollectionNotFound        error
 	DatabaseFoundZeroRecords          error
 	DatabaseInvalidQuery              error
 	DatabaseSessionNil                error
+	DatabaseUpdateFailed              error
 }{
 	DatabaseAggregatePipeFailed:       errors.New("Database aggregate pipe operation failed"),
 	DatabaseFindFailed:                errors.New("Database find operation failed"),
+	DatabaseFindAndApplyFailed:        errors.New("Database find & apply operation failed"),
 	DatabaseInsertFailed:              errors.New("Database insert operation failed"),
 	DatabaseIncorrectConnectionString: errors.New("Database connection string incorrect"),
 	DatabaseCollectionNotFound:        errors.New("Database collection not found"),
 	DatabaseFoundZeroRecords:          errors.New("Database find returned 0 records"),
 	DatabaseInvalidQuery:              errors.New("Database invalid query"),
 	DatabaseSessionNil:                errors.New("Database session returned nil"),
+	DatabaseUpdateFailed:              errors.New("Database update operation failed"),
 }
 
 // ConnectionInfo struct type defines the struct used to hold the database connection string.
