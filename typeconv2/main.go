@@ -21,6 +21,20 @@ func DollarToInt(raw string) int {
 	return i
 }
 
+// DollarToInt64 function strips all the characters from the dollar amount.
+func DollarToInt64(raw string) int64 {
+
+	s := strings.Split(raw, ".")
+
+	if len(s) == 1 {
+		raw = raw + "00"
+	}
+
+	i, _ := strconv.Atoi(replace(raw, "dollar"))
+
+	return int64(i)
+}
+
 // ToFloat function converts string to int.
 func ToFloat(raw string) float64 {
 

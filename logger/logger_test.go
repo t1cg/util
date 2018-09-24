@@ -88,8 +88,18 @@ func TestLogFile(t *testing.T) {
 	}
 
 	l := LogInfo{}
-	fpath := "./logs/"
+	fpath := "/var/log/eit"
 	logname := "test"
+	var level byte
+
+	level = 'I'
+
+	err := l.SetLogFile(fpath, logname, level)
+	if err != nil {
+		t.Errorf("ERROR:%v", err)
+	}
+
+	t.Logf("SetLogFile successful...")
 
 	for _, level := range levels {
 		log.Println("*****setting:", string(level))

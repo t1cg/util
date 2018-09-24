@@ -2,6 +2,7 @@ package logger
 
 import (
 	//standard lib
+
 	"io"
 	"io/ioutil"
 	"log"
@@ -21,15 +22,16 @@ var (
 var (
 	//content/texts to ignore
 	ignores = [...]string{
-		//"main.init",
-		//"main.main",
-		"runtime.goexit",
-		"runtime.main",
+		"main.",
+		".main",
+		"runtime.",
+		"runtime.",
 		"testing.tRunner",
 		"http.(*conn).serve",
-		"http.(*ServeMux).ServeHTTP",
-		"http.serverHandler.ServeHTTP",
-		".1",
+		".ServeHTTP",
+		".Handle",
+		".func1",
+		".func2",
 	}
 
 	//log levels
@@ -77,12 +79,25 @@ type LogInfo struct {
 }
 
 // SetLogFile creates and returns the logger that can be written to the defined log file.
+// IMPORTANT: the file directory must exist and have the right permission for the application to
+// create/write/edit the file. Otherwise, this function will fail
 func (l *LogInfo) SetLogFile(fpath string, logname string, level byte) error {
 	FUNCNAME := "SetLogFile()"
 
-	logFile, err := os.OpenFile(fpath+string(filepath.Separator)+logname+"_app.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	/* //create directory if one does not exist
+	err := os.MkdirAll(fpath, os.FileMode(0644))
 	if err != nil {
-		return err
+		log.Fatalf("FATAL: %v", err)
+	}
+	if err != nil && os.IsNotExist(err) {
+		log.Fatalf("FATAL: %v", err)
+	}
+	*/
+
+	//create the log file
+	logFile, err := os.OpenFile(fpath+string(filepath.Separator)+logname+"_app.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Fatalf("FATAL: %v", err)
 	}
 
 	msg := "successful! loglevel set to:"

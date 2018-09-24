@@ -37,3 +37,8 @@ func (a AppInfo) Error(msg ...interface{}) string {
 func (a AppInfo) LogError(e string) {
 	logger.L.Error.Println(e)
 }
+
+// LogInfo function writes the info string to the stdout.
+func (a AppInfo) LogInfo(e string) {
+	logger.L.Info.Println(e)
+}

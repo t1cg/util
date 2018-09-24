@@ -84,6 +84,7 @@ func TestToInt64(t *testing.T) {
 	iInt = 109
 	iInt64 = 1929292929390030003
 
+	test2 := "$1.00"
 	test3 := "89,983, 899"
 	test4 := "#250*"
 
@@ -92,16 +93,18 @@ func TestToInt64(t *testing.T) {
 	ifaceNil = nil
 
 	result1 := ToInt64(ifaceInt)
-	result2 := ToInt64(ifaceInt64)
+	result2 := ToInt64(test2)
 	result3 := ToInt64(test3)
 	result4 := ToInt64(test4)
 	result5 := ToInt64(ifaceNil)
+	result6 := ToInt64(ifaceInt64)
 
 	t.Logf("test1[%v], result1[%v]", ifaceInt, result1)
-	t.Logf("test2[%v], result2[%v]", ifaceInt64, result2)
+	t.Logf("test2[%v], result2[%v]", test2, result2)
 	t.Logf("test3[%v], result3[%v]", test3, result3)
 	t.Logf("test4[%v], result4[%v]", test4, result4)
 	t.Logf("test5[%v], result5[%v]", ifaceNil, result5)
+	t.Logf("test6[%v], result6[%v]", ifaceInt64, result6)
 
 	t.Logf("exiting")
 }
