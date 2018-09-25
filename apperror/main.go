@@ -38,6 +38,16 @@ func (a AppInfo) LogError(e string) {
 	logger.L.Error.Println(e)
 }
 
+// LogFatal function writes the error string to the stdout.
+func (a AppInfo) LogFatal(e string) {
+	logger.L.Fatal.Println(e)
+}
+
+// LogWarn function writes the info string to the stdout.
+func (a AppInfo) LogWarn(e string) {
+	logger.L.Warn.Println(e)
+}
+
 // LogInfo function writes the info string to the stdout.
 func (a AppInfo) LogInfo(e string) {
 	logger.L.Info.Println(e)

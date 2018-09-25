@@ -32,10 +32,13 @@ var (
 		".Handle",
 		".func1",
 		".func2",
+		".func4",
+		".func5",
+		".0",
 	}
 
 	//log levels
-	levels = [...]byte{TRACE, PERF, INFO, WARN, ERROR, UNKNOWN}
+	levels = [...]byte{TRACE, PERF, INFO, WARN, ERROR, FATAL, UNKNOWN}
 )
 
 // Constant byte representing the log levels
@@ -45,6 +48,7 @@ const (
 	INFO      byte   = 'I'
 	WARN      byte   = 'W'
 	ERROR     byte   = 'E'
+	FATAL     byte   = 'F'
 	UNKNOWN   byte   = 'U'
 	FILLER    string = " "
 	SEPERATOR string = "->"
@@ -75,6 +79,7 @@ type LogInfo struct {
 	Info  *log.Logger
 	Warn  *log.Logger
 	Error *log.Logger
+	Fatal *log.Logger
 	Level byte
 }
 
@@ -110,6 +115,7 @@ func (l *LogInfo) SetLogFile(fpath string, logname string, level byte) error {
 		l.Info = getLogger(false, INFO, logFile)
 		l.Warn = getLogger(false, WARN, logFile)
 		l.Error = getLogger(false, ERROR, logFile)
+		l.Fatal = getLogger(false, FATAL, logFile)
 		l.Level = TRACE
 		l.Trace.Printf("%s %s %s", FUNCNAME, msg, string(level))
 	case PERF:
@@ -167,38 +173,30 @@ func (l *LogInfo) SetLogStream(level byte) {
 
 	msg := "successful! loglevel set to:"
 
-	//set the log level
+	l.Trace = getLogger(false, TRACE, nil)
+	l.Perf = getLogger(false, PERF, nil)
+	l.Info = getLogger(false, INFO, nil)
+	l.Warn = getLogger(false, WARN, nil)
+	l.Error = getLogger(false, ERROR, nil)
+	l.Fatal = getLogger(false, FATAL, nil)
+
 	switch level {
 	case TRACE:
-		l.Trace = getLogger(false, TRACE, nil)
-		l.Perf = getLogger(false, PERF, nil)
-		l.Info = getLogger(false, INFO, nil)
-		l.Warn = getLogger(false, WARN, nil)
-		l.Error = getLogger(false, ERROR, nil)
 		l.Level = TRACE
 		l.Trace.Printf("%s %s %s", FUNCNAME, msg, string(level))
 	case PERF:
-		l.Trace = getLogger(true, TRACE, nil)
-		l.Perf = getLogger(false, PERF, nil)
-		l.Info = getLogger(false, INFO, nil)
-		l.Warn = getLogger(false, WARN, nil)
-		l.Error = getLogger(false, ERROR, nil)
 		l.Level = PERF
+		l.Trace = getLogger(true, TRACE, nil)
 		l.Perf.Printf("%s %s %s", FUNCNAME, msg, string(level))
 	case INFO:
 		l.Trace = getLogger(true, TRACE, nil)
 		l.Perf = getLogger(true, PERF, nil)
-		l.Info = getLogger(false, INFO, nil)
-		l.Warn = getLogger(false, WARN, nil)
-		l.Error = getLogger(false, ERROR, nil)
 		l.Level = INFO
 		l.Info.Printf("%s %s %s", FUNCNAME, msg, string(level))
 	case WARN:
 		l.Trace = getLogger(true, TRACE, nil)
 		l.Perf = getLogger(true, PERF, nil)
 		l.Info = getLogger(true, INFO, nil)
-		l.Warn = getLogger(false, WARN, nil)
-		l.Error = getLogger(false, ERROR, nil)
 		l.Level = WARN
 		l.Warn.Printf("%s %s %s", FUNCNAME, msg, string(level))
 	case ERROR:
@@ -206,15 +204,19 @@ func (l *LogInfo) SetLogStream(level byte) {
 		l.Perf = getLogger(true, PERF, nil)
 		l.Info = getLogger(true, INFO, nil)
 		l.Warn = getLogger(true, WARN, nil)
-		l.Error = getLogger(false, ERROR, nil)
 		l.Level = ERROR
 		l.Error.Printf("%s %s %s", FUNCNAME, msg, string(level))
+	case FATAL:
+		l.Trace = getLogger(true, TRACE, nil)
+		l.Perf = getLogger(true, PERF, nil)
+		l.Info = getLogger(true, INFO, nil)
+		l.Warn = getLogger(true, WARN, nil)
+		l.Error = getLogger(true, WARN, nil)
+		l.Level = FATAL
+		l.Fatal.Printf("%s %s %s", FUNCNAME, msg, string(level))
 	default: //default is info log level
 		l.Trace = getLogger(true, TRACE, nil)
 		l.Perf = getLogger(true, PERF, nil)
-		l.Info = getLogger(false, INFO, nil)
-		l.Warn = getLogger(false, WARN, nil)
-		l.Error = getLogger(false, ERROR, nil)
 		l.Level = INFO
 		l.Info.Printf("%s %s %s", FUNCNAME, msg, string(level))
 	}
@@ -316,8 +318,8 @@ func getLogger(discard bool, level byte, file *os.File) *log.Logger {
 
 	l.SetPrefix(time.Now().Format("2006-01-02 15:04:05.000000") + " " + string(level) + " | ")
 
-	//for error log level only, print out the line number
-	if level == ERROR {
+	//for error or fatal log level only, print out the line number
+	if level == ERROR || level == FATAL {
 		l.SetFlags(log.Lshortfile)
 	}
 
