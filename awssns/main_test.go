@@ -12,7 +12,7 @@ func TestSendSnsSms(t *testing.T) {
 
 	t.Logf("running in %v mode", mode)
 
-	phoneNumber := []string{"4437918616", "4105913055"}
+	phoneNumber := []string{"XXXXXXXXXX", "XXXXXXXXXX"}
 	message := "this is a test test test"
 
 	// Replace 'awsProfile' with your profile identifier
