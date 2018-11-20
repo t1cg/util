@@ -1,0 +1,3 @@
+id,name,header,message
+0,CONNECTION_REFUSED,Our servers are down.,Please check back later.
+1,INCORRECT_PASSWORD,Wrong Password.,Try again or click Forgot password to reset it.

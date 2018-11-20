@@ -59,7 +59,8 @@ func GetSession(cn ConnectionInfo) (*mgo.Session, *apperror.AppInfo) {
 
 	//check parameter
 	if len(cn.Host) == 0 || len(cn.DBName) == 0 || len(cn.User) == 0 || len(cn.Pw) == 0 {
-		a := &apperror.AppInfo{Msg: Errors.DatabaseIncorrectConnectionString}
+		testStr := "host: "+cn.Host+" dbname: "+cn.DBName+" user: "+cn.User+" pw "+cn.Pw
+		a := &apperror.AppInfo{Msg: Errors.DatabaseIncorrectConnectionString+testStr}
 		a.LogError(a.Error())
 		trace.SetEndTime(time.Now())
 		return nil, a
