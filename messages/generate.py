@@ -1,6 +1,7 @@
 import csv
 import sys
 
+# creates the variables that can imported elsewhere
 def goMessages(objs, structType):
     messageString = "var Messages = struct { \n"
     # initializing all objects
@@ -32,7 +33,7 @@ def goStruct(objs, structType):
     return structString
 
 def go(objs, path):
-    f = open("./"+ path +"/"+ path +".go", "w+")
+    f = open("./go/"+ path +"/"+ path +".go", "w+")
     # define package
     f.write("package "+ path + "\n\n")
 
@@ -42,25 +43,23 @@ def go(objs, path):
     f.write(goStruct(objs, structType))
     f.write(goMessages(objs, structType))
     f.close()
-    print(objs)
 
-def reactObjToString(obj):
+def jsObjToString(obj):
     stringObj = "{\n"
     for key in obj.keys():
-        stringObj += "\t\""+ key +"\": \""+obj[key]+"\"\n"
+        stringObj += "\t\""+ key +"\": \""+obj[key]+"\",\n"
     stringObj += "}\n"
     return stringObj
 
-def react(objs, path):
-    f = open("./"+ path +"/"+ path +".js", "w+")
+def js(objs, path):
+    f = open("./js/"+ path +".js", "w+")
     for obj in objs:
-        f.write("export const " + obj['name'] + " = " + reactObjToString(obj) + "\n")
+        f.write("exports." + obj['name'] + " = " + jsObjToString(obj) + "\n")
     f.close()
-    print(obj)
 
 def csvCopy(path):
     obj = []
-    with open('./' + path + '/' + path + '.csv') as csvfile:
+    with open('./csv/' + path + '/' + path + '.csv') as csvfile:
         reader = csv.DictReader(csvfile, delimiter=',')
         for row in reader:
             rowObj = {}
@@ -70,7 +69,7 @@ def csvCopy(path):
     return obj
 
 def main():
-    functions = [go, react]
+    functions = [go, js]
     messageTypes = ['user', 'application']
     csv = {}
 

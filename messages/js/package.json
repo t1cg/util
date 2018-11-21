@@ -1,0 +1,15 @@
+{
+  "name": "t1cg-messages",
+  "version": "1.0.1",
+  "description": "common messages used in every application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/t1cg/util"
+  },
+  "author": "Phillip Shebel <phillip.shebel@t1cg.com>",
+  "license": "ISC"
+}

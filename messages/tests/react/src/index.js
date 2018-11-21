@@ -1,15 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as app from '../../application/application.js'
-import * as user from '../../user/user.js'
+import messages from 't1cg-messages';
 
 class Messages extends React.Component {
   render() {
-    console.log(app.SUCCESS)
+    console.log(messages.ApplicationMessages.SUCCESS.message)
     return (
       <div>
-        <h2>{user.CONNECTION_REFUSED.header}</h2>
-        <p>{user.CONNECTION_REFUSED.message}</p>
+        <h2>{messages.UserMessages.CONNECTION_REFUSED.header}</h2>
+        <p>{messages.UserMessages.CONNECTION_REFUSED.message}</p>
       </div>
     );
   }
