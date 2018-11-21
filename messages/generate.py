@@ -74,8 +74,10 @@ def main():
     csv = {}
 
     if len(sys.argv) > 1 :
-        # TODO: only generate code for specified messages
-        print(sys.argv)
+        messageType = sys.argv[1]
+        print(messageType)
+        if messageType in messageTypes:
+            messageTypes = [messageType]
 
     for m in messageTypes:
         print("==== " + m + " ====")
