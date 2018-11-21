@@ -12,3 +12,10 @@ exports.INCORRECT_PASSWORD = {
 	"name": "INCORRECT_PASSWORD",
 }
 
+exports.INVALID_ROLE = {
+	"header": "Unauthorized",
+	"message": "Invalid user role.",
+	"id": "2",
+	"name": "INVALID_ROLE",
+}
+
