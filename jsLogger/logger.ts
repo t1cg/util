@@ -19,45 +19,52 @@ export default class Logger {
   }
 
   // Sets logger output stream to a file
-  public SetLogFile(fpath: string, logname: string, level: string): void {
+  public SetLogFile(fpath: string, level = this.level): void {
+    this.level = level
     var logFile: fs.WriteStream = fs.createWriteStream(fpath, {flags: 'a'})
 
     switch (this.level) {
-      case 'trace':
-        console.log("made it to trace")
+      case 'trace': { 
         this.Trace = new Log(false, 'trace', logFile)
         this.Debug = new Log(false, 'debug', logFile)
         this.Info = new Log(false, 'info', logFile)
         this.Warn = new Log(false, 'warn', logFile)
         this.Error = new Log(false, 'error', logFile)
-        break;        
-      case 'debug':
+        break;        }
+      case 'debug': {
         this.Trace = new Log(true, 'trace', logFile)
         this.Debug = new Log(false, 'debug', logFile)
         this.Info = new Log(false, 'info', logFile)
         this.Warn = new Log(false, 'warn', logFile)
         this.Error = new Log(false, 'error', logFile)
         break;
-      case 'info':
+      }
+      case 'info': {
         this.Trace = new Log(true, 'trace', logFile)
         this.Debug = new Log(true, 'debug', logFile)
         this.Info = new Log(false, 'info', logFile)
         this.Warn = new Log(false, 'warn', logFile)
         this.Error = new Log(false, 'error', logFile)
         break;
-      case 'warn':
+      }
+      case 'warn': {
         this.Trace = new Log(true, 'trace', logFile)
         this.Debug = new Log(true, 'debug', logFile)
         this.Info = new Log(true, 'info', logFile)
         this.Warn = new Log(false, 'warn', logFile)
         this.Error = new Log(false, 'error', logFile)
-        break;                
-      default:
+        break;
+      }         
+      case 'error': {
         this.Trace = new Log(true, 'trace', logFile)
         this.Debug = new Log(true, 'debug', logFile)
         this.Info = new Log(true, 'info', logFile)
         this.Warn = new Log(true, 'warn', logFile)
         this.Error = new Log(false, 'error', logFile)
+      }
+      default: {
+        console.log('invalid log level')
+      }
     }
     
   }
@@ -114,6 +121,11 @@ export default class Logger {
         console.log("invalid log level")                                       
       }
     }            
+  }
+
+  // Get log level
+  public GetLogLevel(): string {
+    return this.level;
   }
 
   // Set log level to input
