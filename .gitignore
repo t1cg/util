@@ -11,6 +11,7 @@ test
 etcd/default.etcd
 etcdv2/default.etcd
 .DS_Store
+*/node_modules
 
 # Architecture specific extensions/prefixes
 *.[568vq]
