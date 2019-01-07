@@ -11,7 +11,7 @@ class Logger {
             this.level = level;
         }
         else {
-            console.warn('invalid level, set to default (trace)');
+            console.log('invalid level, set to default (trace)');
             this.level = 'trace';
         }
         // check encoding exists, then set it
@@ -19,7 +19,7 @@ class Logger {
             this.encoding = encoding;
         }
         else {
-            console.warn('invalid encoding, set to default (utf8)');
+            console.log('invalid encoding, set to default (utf8)');
             this.encoding = 'utf8';
         }
         // set log level
@@ -141,7 +141,7 @@ class Logger {
             this.encoding = type;
         }
         else {
-            console.warn('invalid encoding');
+            console.log('invalid encoding');
         }
     }
     // Get log level
@@ -155,7 +155,7 @@ class Logger {
             this.SetLogStream(level);
         }
         else {
-            console.warn('invalid level');
+            console.log('invalid level');
         }
     }
     Log(msg) {

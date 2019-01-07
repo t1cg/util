@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">42.45% </span>
+        <span class="strong">41.35% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>45/106</span>
+        <span class='fraction'>43/104</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">56% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>7/11</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">42.45% </span>
+        <span class="strong">41.35% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>45/106</span>
+        <span class='fraction'>43/104</span>
       </div>
     </div>
   </div>
@@ -233,7 +233,9 @@
 188
 189
 190
-191</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+191
+192
+193</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -263,6 +265,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -308,6 +313,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -321,19 +330,8 @@
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -348,10 +346,16 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -436,7 +440,7 @@ class Logger {
             this.level = level;
         }
         else {
-            console.warn('invalid level, set to default (trace)');
+            console.log('invalid level, set to default (trace)');
             this.level = 'trace';
         }
         // check encoding exists, then set it
@@ -444,7 +448,7 @@ class Logger {
             this.encoding = encoding;
         }
         else {
-            console.warn('invalid encoding, set to default (utf8)');
+            console.log('invalid encoding, set to default (utf8)');
             this.encoding = 'utf8';
         }
         // set log level
@@ -453,51 +457,58 @@ class Logger {
     // Sets logger output stream to a file
 <span class="fstat-no" title="function not covered" >    Se</span>tLogFile(fpath, level = <span class="branch-0 cbranch-no" title="branch not covered" >this.level)</span> {
 <span class="cstat-no" title="statement not covered" >        this.level = level;</span>
-        var logFile = <span class="cstat-no" title="statement not covered" >fs.createWriteStream(fpath, { flags: 'a' });</span>
-        // set logs based on level
-<span class="cstat-no" title="statement not covered" >        switch (this.level) {</span>
-            case 'trace': {
-<span class="cstat-no" title="statement not covered" >                this.Trace = new Log(false, 'trace', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                this.Debug = new Log(false, 'debug', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                this.Info = new Log(false, 'info', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                this.Warn = new Log(false, 'warn', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                this.Error = new Log(false, 'error', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                break;</span>
+        var logFile;
+<span class="cstat-no" title="statement not covered" >        try {</span>
+<span class="cstat-no" title="statement not covered" >            fs.accessSync('path', fs.constants.W_OK);</span>
+<span class="cstat-no" title="statement not covered" >            logFile = fs.createWriteStream(fpath, { flags: 'a' });</span>
+            // set logs based on level
+<span class="cstat-no" title="statement not covered" >            switch (this.level) {</span>
+                case 'trace': {
+<span class="cstat-no" title="statement not covered" >                    this.Trace = new Log(false, 'trace', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Debug = new Log(false, 'debug', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Info = new Log(false, 'info', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Warn = new Log(false, 'warn', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Error = new Log(false, 'error', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    break;</span>
+                }
+                case 'debug': {
+<span class="cstat-no" title="statement not covered" >                    this.Trace = new Log(true, 'trace', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Debug = new Log(false, 'debug', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Info = new Log(false, 'info', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Warn = new Log(false, 'warn', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Error = new Log(false, 'error', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    break;</span>
+                }
+                case 'info': {
+<span class="cstat-no" title="statement not covered" >                    this.Trace = new Log(true, 'trace', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Debug = new Log(true, 'debug', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Info = new Log(false, 'info', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Warn = new Log(false, 'warn', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Error = new Log(false, 'error', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    break;</span>
+                }
+                case 'warn': {
+<span class="cstat-no" title="statement not covered" >                    this.Trace = new Log(true, 'trace', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Debug = new Log(true, 'debug', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Info = new Log(true, 'info', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Warn = new Log(false, 'warn', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Error = new Log(false, 'error', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    break;</span>
+                }
+                case 'error': {
+<span class="cstat-no" title="statement not covered" >                    this.Trace = new Log(true, 'trace', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Debug = new Log(true, 'debug', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Info = new Log(true, 'info', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Warn = new Log(true, 'warn', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Error = new Log(false, 'error', logFile);</span>
+                }
+                default: {
+<span class="cstat-no" title="statement not covered" >                    console.log('invalid log level');</span>
+                }
             }
-            case 'debug': {
-<span class="cstat-no" title="statement not covered" >                this.Trace = new Log(true, 'trace', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                this.Debug = new Log(false, 'debug', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                this.Info = new Log(false, 'info', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                this.Warn = new Log(false, 'warn', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                this.Error = new Log(false, 'error', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                break;</span>
-            }
-            case 'info': {
-<span class="cstat-no" title="statement not covered" >                this.Trace = new Log(true, 'trace', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                this.Debug = new Log(true, 'debug', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                this.Info = new Log(false, 'info', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                this.Warn = new Log(false, 'warn', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                this.Error = new Log(false, 'error', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                break;</span>
-            }
-            case 'warn': {
-<span class="cstat-no" title="statement not covered" >                this.Trace = new Log(true, 'trace', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                this.Debug = new Log(true, 'debug', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                this.Info = new Log(true, 'info', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                this.Warn = new Log(false, 'warn', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                this.Error = new Log(false, 'error', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                break;</span>
-            }
-            case 'error': {
-<span class="cstat-no" title="statement not covered" >                this.Trace = new Log(true, 'trace', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                this.Debug = new Log(true, 'debug', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                this.Info = new Log(true, 'info', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                this.Warn = new Log(true, 'warn', logFile);</span>
-<span class="cstat-no" title="statement not covered" >                this.Error = new Log(false, 'error', logFile);</span>
-            }
-            default: {
-<span class="cstat-no" title="statement not covered" >                console.log('invalid log level');</span>
-            }
+        }
+        catch (err) {
+<span class="cstat-no" title="statement not covered" >            console.error('no access!');</span>
         }
     }
     // Set logger output to the IO stream
@@ -505,7 +516,6 @@ class Logger {
         // set logs base on level
         switch (this.level) {
             case 'trace': {
-                console.log("made it to trace");
                 this.Trace = new Log(false, 'trace', process.stdout);
                 this.Debug = new Log(false, 'debug', process.stdout);
                 this.Info = new Log(false, 'info', process.stdout);
@@ -514,7 +524,6 @@ class Logger {
                 break;
             }
 <span class="branch-1 cbranch-no" title="branch not covered" >            case 'debug': {</span>
-<span class="cstat-no" title="statement not covered" >                console.log("made it to debug");</span>
 <span class="cstat-no" title="statement not covered" >                this.Trace = new Log(true, 'trace', process.stdout);</span>
 <span class="cstat-no" title="statement not covered" >                this.Debug = new Log(false, 'debug', process.stdout);</span>
 <span class="cstat-no" title="statement not covered" >                this.Info = new Log(false, 'info', process.stdout);</span>
@@ -523,7 +532,6 @@ class Logger {
 <span class="cstat-no" title="statement not covered" >                break;</span>
             }
 <span class="branch-2 cbranch-no" title="branch not covered" >            case 'info': {</span>
-<span class="cstat-no" title="statement not covered" >                console.log("made it to info");</span>
 <span class="cstat-no" title="statement not covered" >                this.Trace = new Log(true, 'trace', process.stdout);</span>
 <span class="cstat-no" title="statement not covered" >                this.Debug = new Log(true, 'debug', process.stdout);</span>
 <span class="cstat-no" title="statement not covered" >                this.Info = new Log(false, 'info', process.stdout);</span>
@@ -532,7 +540,6 @@ class Logger {
 <span class="cstat-no" title="statement not covered" >                break;</span>
             }
 <span class="branch-3 cbranch-no" title="branch not covered" >            case 'warn': {</span>
-<span class="cstat-no" title="statement not covered" >                console.log("made it to warn");</span>
 <span class="cstat-no" title="statement not covered" >                this.Trace = new Log(true, 'trace', process.stdout);</span>
 <span class="cstat-no" title="statement not covered" >                this.Debug = new Log(true, 'debug', process.stdout);</span>
 <span class="cstat-no" title="statement not covered" >                this.Info = new Log(true, 'info', process.stdout);</span>
@@ -541,7 +548,6 @@ class Logger {
 <span class="cstat-no" title="statement not covered" >                break;</span>
             }
             case 'error': {
-                console.log("made it to default");
                 this.Trace = new Log(true, 'trace', process.stdout);
                 this.Debug = new Log(true, 'debug', process.stdout);
                 this.Info = new Log(true, 'info', process.stdout);
@@ -564,7 +570,7 @@ class Logger {
             this.encoding = type;
         }
         else {
-            console.warn('invalid encoding');
+            console.log('invalid encoding');
         }
     }
     // Get log level
@@ -578,7 +584,7 @@ class Logger {
             this.SetLogStream(level);
         }
         else {
-            console.warn('invalid level');
+            console.log('invalid level');
         }
     }
 <span class="fstat-no" title="function not covered" >    Lo</span>g(msg) {
@@ -619,7 +625,7 @@ class DiscardStream extends stream.Writable {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Jan 04 2019 13:04:56 GMT-0500 (EST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Jan 07 2019 11:31:23 GMT-0500 (Eastern Standard Time)
 </div>
 </div>
 <script src="prettify.js"></script>
