@@ -47,42 +47,42 @@ export default class Logger {
       // set logs based on level
       switch (this.level) {
         case 'trace': { 
-          this.Trace = new Log(false, 'trace', logFile)
-          this.Debug = new Log(false, 'debug', logFile)
-          this.Info = new Log(false, 'info', logFile)
-          this.Warn = new Log(false, 'warn', logFile)
-          this.Error = new Log(false, 'error', logFile)
+          this.Trace = new Log(false, 'trace', logFile, this.encoding)
+          this.Debug = new Log(false, 'debug', logFile, this.encoding)
+          this.Info = new Log(false, 'info', logFile, this.encoding)
+          this.Warn = new Log(false, 'warn', logFile, this.encoding)
+          this.Error = new Log(false, 'error', logFile, this.encoding)
           break;        }
         case 'debug': {
-          this.Trace = new Log(true, 'trace', logFile)
-          this.Debug = new Log(false, 'debug', logFile)
-          this.Info = new Log(false, 'info', logFile)
-          this.Warn = new Log(false, 'warn', logFile)
-          this.Error = new Log(false, 'error', logFile)
+          this.Trace = new Log(true, 'trace', logFile, this.encoding)
+          this.Debug = new Log(false, 'debug', logFile, this.encoding)
+          this.Info = new Log(false, 'info', logFile, this.encoding)
+          this.Warn = new Log(false, 'warn', logFile, this.encoding)
+          this.Error = new Log(false, 'error', logFile, this.encoding)
           break;
         }
         case 'info': {
-          this.Trace = new Log(true, 'trace', logFile)
-          this.Debug = new Log(true, 'debug', logFile)
-          this.Info = new Log(false, 'info', logFile)
-          this.Warn = new Log(false, 'warn', logFile)
-          this.Error = new Log(false, 'error', logFile)
+          this.Trace = new Log(true, 'trace', logFile, this.encoding)
+          this.Debug = new Log(true, 'debug', logFile, this.encoding)
+          this.Info = new Log(false, 'info', logFile, this.encoding)
+          this.Warn = new Log(false, 'warn', logFile, this.encoding)
+          this.Error = new Log(false, 'error', logFile, this.encoding)
           break;
         }
         case 'warn': {
-          this.Trace = new Log(true, 'trace', logFile)
-          this.Debug = new Log(true, 'debug', logFile)
-          this.Info = new Log(true, 'info', logFile)
-          this.Warn = new Log(false, 'warn', logFile)
-          this.Error = new Log(false, 'error', logFile)
+          this.Trace = new Log(true, 'trace', logFile, this.encoding)
+          this.Debug = new Log(true, 'debug', logFile, this.encoding)
+          this.Info = new Log(true, 'info', logFile, this.encoding)
+          this.Warn = new Log(false, 'warn', logFile, this.encoding)
+          this.Error = new Log(false, 'error', logFile, this.encoding)
           break;
         }         
         case 'error': {
-          this.Trace = new Log(true, 'trace', logFile)
-          this.Debug = new Log(true, 'debug', logFile)
-          this.Info = new Log(true, 'info', logFile)
-          this.Warn = new Log(true, 'warn', logFile)
-          this.Error = new Log(false, 'error', logFile)
+          this.Trace = new Log(true, 'trace', logFile, this.encoding)
+          this.Debug = new Log(true, 'debug', logFile, this.encoding)
+          this.Info = new Log(true, 'info', logFile, this.encoding)
+          this.Warn = new Log(true, 'warn', logFile, this.encoding)
+          this.Error = new Log(false, 'error', logFile, this.encoding)
         }
         default: {
           console.log('invalid log level')
@@ -98,43 +98,43 @@ export default class Logger {
     // set logs base on level
     switch (this.level) {
       case 'trace': {
-        this.Trace = new Log(false, 'trace', process.stdout)
-        this.Debug = new Log(false, 'debug', process.stdout)
-        this.Info = new Log(false, 'info', process.stdout)
-        this.Warn = new Log(false, 'warn', process.stdout)
-        this.Error = new Log(false, 'error', process.stdout)
+        this.Trace = new Log(false, 'trace', process.stdout, this.encoding)
+        this.Debug = new Log(false, 'debug', process.stdout, this.encoding)
+        this.Info = new Log(false, 'info', process.stdout, this.encoding)
+        this.Warn = new Log(false, 'warn', process.stdout, this.encoding)
+        this.Error = new Log(false, 'error', process.stdout, this.encoding)
         break;
       }
       case 'debug': {
-        this.Trace = new Log(true, 'trace', process.stdout)
-        this.Debug = new Log(false, 'debug', process.stdout)
-        this.Info = new Log(false, 'info', process.stdout)
-        this.Warn = new Log(false, 'warn', process.stdout)
-        this.Error = new Log(false, 'error', process.stdout)
+        this.Trace = new Log(true, 'trace', process.stdout, this.encoding)
+        this.Debug = new Log(false, 'debug', process.stdout, this.encoding)
+        this.Info = new Log(false, 'info', process.stdout, this.encoding)
+        this.Warn = new Log(false, 'warn', process.stdout, this.encoding)
+        this.Error = new Log(false, 'error', process.stdout, this.encoding)
         break;
       }
       case 'info': {
-        this.Trace = new Log(true, 'trace', process.stdout)
-        this.Debug = new Log(true, 'debug', process.stdout)
-        this.Info = new Log(false, 'info', process.stdout)
-        this.Warn = new Log(false, 'warn', process.stdout)
-        this.Error = new Log(false, 'error', process.stdout)
+        this.Trace = new Log(true, 'trace', process.stdout, this.encoding)
+        this.Debug = new Log(true, 'debug', process.stdout, this.encoding)
+        this.Info = new Log(false, 'info', process.stdout, this.encoding)
+        this.Warn = new Log(false, 'warn', process.stdout, this.encoding)
+        this.Error = new Log(false, 'error', process.stdout, this.encoding)
         break;
       }
       case 'warn': {
-        this.Trace = new Log(true, 'trace', process.stdout)
-        this.Debug = new Log(true, 'debug', process.stdout)
-        this.Info = new Log(true, 'info', process.stdout)
-        this.Warn = new Log(false, 'warn', process.stdout)
-        this.Error = new Log(false, 'error', process.stdout)
+        this.Trace = new Log(true, 'trace', process.stdout, this.encoding)
+        this.Debug = new Log(true, 'debug', process.stdout, this.encoding)
+        this.Info = new Log(true, 'info', process.stdout, this.encoding)
+        this.Warn = new Log(false, 'warn', process.stdout, this.encoding)
+        this.Error = new Log(false, 'error', process.stdout, this.encoding)
         break;
       }
       case 'error': {
-        this.Trace = new Log(true, 'trace', process.stdout)
-        this.Debug = new Log(true, 'debug', process.stdout)
-        this.Info = new Log(true, 'info', process.stdout)
-        this.Warn = new Log(true, 'warn', process.stdout)
-        this.Error = new Log(false, 'error', process.stdout)
+        this.Trace = new Log(true, 'trace', process.stdout, this.encoding)
+        this.Debug = new Log(true, 'debug', process.stdout, this.encoding)
+        this.Info = new Log(true, 'info', process.stdout, this.encoding)
+        this.Warn = new Log(true, 'warn', process.stdout, this.encoding)
+        this.Error = new Log(false, 'error', process.stdout, this.encoding)
         break;
       }
       default: {
@@ -173,21 +173,25 @@ export default class Logger {
   }
 
   public Log(msg: string): void {
-    this.Trace.Output(msg)
-    this.Debug.Output(msg)
-    this.Info.Output(msg)
-    this.Warn.Output(msg)
-    this.Error.Output(msg)
+    let encoding = this.encoding;
+    this.Trace.Output(msg, encoding)
+    this.Debug.Output(msg, encoding)
+    this.Info.Output(msg, encoding)
+    this.Warn.Output(msg, encoding)
+    this.Error.Output(msg, encoding)
   }
 }
 
 class Log {
   private prefix: string;
+  private timestamp: string;
   private level: string;
   private out: stream.Writable;
+  private encoding: string
 
-  constructor(discard: boolean, level: string, stream: stream.Writable) {
+  constructor(discard: boolean, level: string, stream: stream.Writable, encoding: string) {
     this.level = level
+    this.encoding = encoding
 
     if (discard) {
       // don't write to file
@@ -197,11 +201,24 @@ class Log {
       this.out = stream
     }
 
-    this.prefix = moment().format() + " " + level + " | "
+    this.timestamp = moment().format("MM-DD-YYYY h:mm:ss");
+    this.prefix = this.timestamp + " " + level + " | ";
   }
 
-  public Output(msg: string) {
-    this.out.write(this.prefix + msg + "\n")
+  public Output(msg: string, encoding: string) {
+
+    switch (encoding) {
+      case 'json': {
+        this.out.write("ENCODING: JSON \n")
+        this.out.write("{\"timestamp\":" + "\"" + this.timestamp + "\",\"level\":\"" + this.level + "\",\"message\":" + "\"" + msg + "\"}\n")
+        break;
+      }
+      default: {
+        this.out.write("ENCODING: " + this.encoding + "\n")
+        this.out.write(this.prefix + msg + "\n")
+      }
+    }
+    
   }
 
 }
