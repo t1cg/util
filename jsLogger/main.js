@@ -9,5 +9,7 @@ function main() {
     L.SetEncoding('json');
     L.SetLogLevel('warn');
     L.Log("world");
+    L.SetLogFile('../test.txt', 'info');
+    L.Log("hello");
 }
 main();

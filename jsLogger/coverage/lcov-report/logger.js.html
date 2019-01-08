@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for logger.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="prettify.css" />
+    <link rel="stylesheet" href="base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="index.html">All files</a> logger.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">41.35% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>43/104</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">56% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>14/25</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">63.64% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>7/11</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">41.35% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>43/104</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">Object.defineProperty(exports, "__esModule", { value: true });
+const stream = require("stream");
+const moment = require("moment");
+const fs = require("fs");
+const encodings = ['utf8', 'json'];
+const levels = ['trace', 'debug', 'info', 'warn', 'error'];
+class Logger {
+    constructor(encoding = 'utf8', level = 'trace') {
+        // check level exists, then set it
+        if (levels.indexOf(level) &gt; -1) {
+            this.level = level;
+        }
+        else {
+            console.log('invalid level, set to default (trace)');
+            this.level = 'trace';
+        }
+        // check encoding exists, then set it
+        if (encodings.indexOf(encoding) &gt; -1) {
+            this.encoding = encoding;
+        }
+        else {
+            console.log('invalid encoding, set to default (utf8)');
+            this.encoding = 'utf8';
+        }
+        // set log level
+        this.SetLogStream(level);
+    }
+    // Sets logger output stream to a file
+<span class="fstat-no" title="function not covered" >    Se</span>tLogFile(fpath, level = <span class="branch-0 cbranch-no" title="branch not covered" >this.level)</span> {
+<span class="cstat-no" title="statement not covered" >        this.level = level;</span>
+        var logFile;
+<span class="cstat-no" title="statement not covered" >        try {</span>
+<span class="cstat-no" title="statement not covered" >            fs.accessSync('path', fs.constants.W_OK);</span>
+<span class="cstat-no" title="statement not covered" >            logFile = fs.createWriteStream(fpath, { flags: 'a' });</span>
+            // set logs based on level
+<span class="cstat-no" title="statement not covered" >            switch (this.level) {</span>
+                case 'trace': {
+<span class="cstat-no" title="statement not covered" >                    this.Trace = new Log(false, 'trace', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Debug = new Log(false, 'debug', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Info = new Log(false, 'info', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Warn = new Log(false, 'warn', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Error = new Log(false, 'error', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    break;</span>
+                }
+                case 'debug': {
+<span class="cstat-no" title="statement not covered" >                    this.Trace = new Log(true, 'trace', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Debug = new Log(false, 'debug', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Info = new Log(false, 'info', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Warn = new Log(false, 'warn', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Error = new Log(false, 'error', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    break;</span>
+                }
+                case 'info': {
+<span class="cstat-no" title="statement not covered" >                    this.Trace = new Log(true, 'trace', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Debug = new Log(true, 'debug', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Info = new Log(false, 'info', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Warn = new Log(false, 'warn', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Error = new Log(false, 'error', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    break;</span>
+                }
+                case 'warn': {
+<span class="cstat-no" title="statement not covered" >                    this.Trace = new Log(true, 'trace', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Debug = new Log(true, 'debug', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Info = new Log(true, 'info', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Warn = new Log(false, 'warn', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Error = new Log(false, 'error', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    break;</span>
+                }
+                case 'error': {
+<span class="cstat-no" title="statement not covered" >                    this.Trace = new Log(true, 'trace', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Debug = new Log(true, 'debug', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Info = new Log(true, 'info', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Warn = new Log(true, 'warn', logFile);</span>
+<span class="cstat-no" title="statement not covered" >                    this.Error = new Log(false, 'error', logFile);</span>
+                }
+                default: {
+<span class="cstat-no" title="statement not covered" >                    console.log('invalid log level');</span>
+                }
+            }
+        }
+        catch (err) {
+<span class="cstat-no" title="statement not covered" >            console.error('no access!');</span>
+        }
+    }
+    // Set logger output to the IO stream
+    SetLogStream(level) {
+        // set logs base on level
+        switch (this.level) {
+            case 'trace': {
+                this.Trace = new Log(false, 'trace', process.stdout);
+                this.Debug = new Log(false, 'debug', process.stdout);
+                this.Info = new Log(false, 'info', process.stdout);
+                this.Warn = new Log(false, 'warn', process.stdout);
+                this.Error = new Log(false, 'error', process.stdout);
+                break;
+            }
+<span class="branch-1 cbranch-no" title="branch not covered" >            case 'debug': {</span>
+<span class="cstat-no" title="statement not covered" >                this.Trace = new Log(true, 'trace', process.stdout);</span>
+<span class="cstat-no" title="statement not covered" >                this.Debug = new Log(false, 'debug', process.stdout);</span>
+<span class="cstat-no" title="statement not covered" >                this.Info = new Log(false, 'info', process.stdout);</span>
+<span class="cstat-no" title="statement not covered" >                this.Warn = new Log(false, 'warn', process.stdout);</span>
+<span class="cstat-no" title="statement not covered" >                this.Error = new Log(false, 'error', process.stdout);</span>
+<span class="cstat-no" title="statement not covered" >                break;</span>
+            }
+<span class="branch-2 cbranch-no" title="branch not covered" >            case 'info': {</span>
+<span class="cstat-no" title="statement not covered" >                this.Trace = new Log(true, 'trace', process.stdout);</span>
+<span class="cstat-no" title="statement not covered" >                this.Debug = new Log(true, 'debug', process.stdout);</span>
+<span class="cstat-no" title="statement not covered" >                this.Info = new Log(false, 'info', process.stdout);</span>
+<span class="cstat-no" title="statement not covered" >                this.Warn = new Log(false, 'warn', process.stdout);</span>
+<span class="cstat-no" title="statement not covered" >                this.Error = new Log(false, 'error', process.stdout);</span>
+<span class="cstat-no" title="statement not covered" >                break;</span>
+            }
+<span class="branch-3 cbranch-no" title="branch not covered" >            case 'warn': {</span>
+<span class="cstat-no" title="statement not covered" >                this.Trace = new Log(true, 'trace', process.stdout);</span>
+<span class="cstat-no" title="statement not covered" >                this.Debug = new Log(true, 'debug', process.stdout);</span>
+<span class="cstat-no" title="statement not covered" >                this.Info = new Log(true, 'info', process.stdout);</span>
+<span class="cstat-no" title="statement not covered" >                this.Warn = new Log(false, 'warn', process.stdout);</span>
+<span class="cstat-no" title="statement not covered" >                this.Error = new Log(false, 'error', process.stdout);</span>
+<span class="cstat-no" title="statement not covered" >                break;</span>
+            }
+            case 'error': {
+                this.Trace = new Log(true, 'trace', process.stdout);
+                this.Debug = new Log(true, 'debug', process.stdout);
+                this.Info = new Log(true, 'info', process.stdout);
+                this.Warn = new Log(true, 'warn', process.stdout);
+                this.Error = new Log(false, 'error', process.stdout);
+                break;
+            }
+<span class="branch-5 cbranch-no" title="branch not covered" >            default: {</span>
+<span class="cstat-no" title="statement not covered" >                console.log("invalid log level");</span>
+            }
+        }
+    }
+    // Get encoding
+    GetEncoding() {
+        return this.encoding;
+    }
+    // Set encoding
+    SetEncoding(type) {
+        if (encodings.indexOf(type) &gt; -1) {
+            this.encoding = type;
+        }
+        else {
+            console.log('invalid encoding');
+        }
+    }
+    // Get log level
+    GetLogLevel() {
+        return this.level;
+    }
+    // Set log level to input
+    SetLogLevel(level) {
+        if (levels.indexOf(level) &gt; -1) {
+            this.level = level;
+            this.SetLogStream(level);
+        }
+        else {
+            console.log('invalid level');
+        }
+    }
+<span class="fstat-no" title="function not covered" >    Lo</span>g(msg) {
+<span class="cstat-no" title="statement not covered" >        this.Trace.Output(msg);</span>
+<span class="cstat-no" title="statement not covered" >        this.Debug.Output(msg);</span>
+<span class="cstat-no" title="statement not covered" >        this.Info.Output(msg);</span>
+<span class="cstat-no" title="statement not covered" >        this.Warn.Output(msg);</span>
+<span class="cstat-no" title="statement not covered" >        this.Error.Output(msg);</span>
+    }
+}
+exports.default = Logger;
+class Log {
+    constructor(discard, level, stream) {
+        this.level = level;
+        if (discard) {
+            // don't write to file
+            this.out = new DiscardStream();
+        }
+        else {
+            // write to file
+            this.out = stream;
+        }
+        this.prefix = moment().format() + " " + level + " | ";
+    }
+<span class="fstat-no" title="function not covered" >    Ou</span>tput(msg) {
+<span class="cstat-no" title="statement not covered" >        this.out.write(this.prefix + msg + "\n");</span>
+    }
+}
+// for when we don't need to write to a file
+class DiscardStream extends stream.Writable {
+<span class="fstat-no" title="function not covered" >    _w</span>rite(chunk, enc, next) {
+        // do nothing
+    }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Jan 07 2019 11:31:23 GMT-0500 (Eastern Standard Time)
+</div>
+</div>
+<script src="prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="sorter.js"></script>
+</body>
+</html>
