@@ -209,12 +209,10 @@ class Log {
 
     switch (encoding) {
       case 'json': {
-        this.out.write("ENCODING: JSON \n")
         this.out.write("{\"timestamp\":" + "\"" + this.timestamp + "\",\"level\":\"" + this.level + "\",\"message\":" + "\"" + msg + "\"}\n")
         break;
       }
       default: {
-        this.out.write("ENCODING: " + this.encoding + "\n")
         this.out.write(this.prefix + msg + "\n")
       }
     }
