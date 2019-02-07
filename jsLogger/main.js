@@ -1,8 +1,7 @@
-"use strict";
-exports.__esModule = true;
-var logger_1 = require("./logger");
+Object.defineProperty(exports, "__esModule", { value: true });
+const logger_1 = require("./logger");
 function main() {
-    var L = new logger_1["default"]();
+    const L = new logger_1.default();
     // L.SetEncoding('json');
     // L.SetLogLevel('info')
     L.Log("hello");

@@ -1,11 +1,12 @@
 {
-  "name": "util-js",
-  "version": "1.0.0",
+  "name": "t1cg-logger",
+  "version": "1.0.1",
   "description": "",
   "scripts": {
     "test": "jest --coverage --verbose"
   },
-  "author": "",
+  "main": "logger.js",
+  "author": "Phillip Shebel and Brandon Brown (https://www.t1cg.io)",
   "license": "ISC",
   "dependencies": {
     "chai": "^4.2.0",

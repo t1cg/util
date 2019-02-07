@@ -41,8 +41,8 @@ export default class Logger {
     var logFile: fs.WriteStream;
 
     try {
-      fs.accessSync('path', fs.constants.W_OK);
-      logFile = fs.createWriteStream(fpath, {flags: 'a'})
+      fs.accessSync(fpath, fs.constants.W_OK);
+      logFile = fs.createWriteStream(fpath, {flags: 'a'});
 
       // set logs based on level
       switch (this.level) {
