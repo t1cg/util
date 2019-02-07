@@ -33,6 +33,17 @@ func (a AppInfo) Error(msg ...interface{}) string {
 	return fmt.Sprintf("%v message[%v]", fname, a.Msg.Error())
 }
 
+// Errorf function returns a custom, parsed string based on Errorf; extends the standad Error() function.
+func (a AppInfo) Errorf(custom string, msg ...interface{}) string {
+
+	//get the caller and callee function names
+	fname := logger.GetFuncName()
+
+	newCustom := fname + " " + custom
+
+	return fmt.Sprintf(newCustom, msg...)
+}
+
 // LogError function writes the error string to the stdout.
 func (a AppInfo) LogError(e string) {
 	logger.L.Error.Println(e)

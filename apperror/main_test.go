@@ -19,6 +19,8 @@ func TestAppError(t *testing.T) {
 	e4 := AppInfo{Msg: errors.New("error message with added message & rc"), Rc: 404}
 	e4.LogError(e4.Error("this is the added msg e4"))
 
+	s1 := "string1"
+	s2 := "string2"
 	e5 := AppInfo{Msg: errors.New("info message with added message & rc"), Rc: 500}
-	e5.LogInfo(e5.Error("this is the added msg e5"))
+	e5.LogInfo(e5.Errorf("this is the added msg e5[%v], e5[%v]", s1, s2))
 }
