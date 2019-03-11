@@ -8,6 +8,7 @@ _obj
 _test
 logs
 test
+output
 etcd/default.etcd
 etcdv2/default.etcd
 .DS_Store
