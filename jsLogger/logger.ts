@@ -36,6 +36,11 @@ export default class Logger {
 
   // Sets logger output stream to a file
   public SetLogFile(fpath: string, level = this.level): void {
+    if (levels.indexOf(level) < 0) {
+      console.log('invalid level')
+      return;
+    }
+    
     this.level = level
 
     var logFile: fs.WriteStream;
@@ -95,6 +100,11 @@ export default class Logger {
 
   // Set logger output to the IO stream
   public SetLogStream(level: string): void {
+    if (levels.indexOf(level) < 0) {
+      console.log('invalid level')
+      return;
+    }
+    this.level = level
     // set logs base on level
     switch (this.level) {
       case 'trace': {
@@ -162,16 +172,6 @@ export default class Logger {
     return this.level;
   }
 
-  // Set log level to input
-  public SetLogLevel(level: string): void {
-    if (levels.indexOf(level) > -1) {
-      this.level = level
-      this.SetLogStream(level)
-    } else {
-      console.log('invalid level')
-    }
-  }
-
   public Log(msg: string): void {
     let encoding = this.encoding;
     this.Trace.Output(msg, encoding)
@@ -183,8 +183,6 @@ export default class Logger {
 }
 
 class Log {
-  private prefix: string;
-  private timestamp: string;
   private level: string;
   private out: stream.Writable;
   private encoding: string
@@ -200,20 +198,18 @@ class Log {
       // write to file
       this.out = stream
     }
-
-    this.timestamp = moment().format("MM-DD-YYYY h:mm:ss");
-    this.prefix = this.timestamp + " " + level + " | ";
   }
 
   public Output(msg: string, encoding: string) {
-
+    const timestamp = moment().format("MM-DD-YYYY h:mm:ss");
+    const prefix = timestamp + " " + this.level + " | ";
     switch (encoding) {
       case 'json': {
-        this.out.write("{\"timestamp\":" + "\"" + this.timestamp + "\",\"level\":\"" + this.level + "\",\"message\":" + "\"" + msg + "\"}\n")
+        this.out.write("{\"timestamp\":" + "\"" + timestamp + "\",\"level\":\"" + this.level + "\",\"message\":" + "\"" + msg + "\"}\n")
         break;
       }
       default: {
-        this.out.write(this.prefix + msg + "\n")
+        this.out.write(prefix + msg + "\n")
       }
     }
     

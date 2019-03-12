@@ -30,16 +30,15 @@ describe('Encoding', () => {
         expect(L.GetEncoding()).to.equal('utf8')
     })
 })
-
 describe('LogLevel', () => {
-    it('Should change default log level and ', () => {
+    it('Should change default log level ', () => {
         const L = new Logger()
-        L.SetLogLevel('error')
+        L.SetLogStream('error')
         expect(L.GetLogLevel()).to.equal('error')
     })
     it('Should handle an invalid request', () => {
         const L = new Logger()
-        L.SetLogLevel('asdf')
+        L.SetLogStream('asdf')
         expect(L.GetLogLevel()).to.equal('trace')
     })
 })

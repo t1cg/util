@@ -1,11 +1,27 @@
-Object.defineProperty(exports, "__esModule", { value: true });
-const stream = require("stream");
-const moment = require("moment");
-const fs = require("fs");
-const encodings = ['utf8', 'json'];
-const levels = ['trace', 'debug', 'info', 'warn', 'error'];
-class Logger {
-    constructor(encoding = 'utf8', level = 'trace') {
+"use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+exports.__esModule = true;
+var stream = require("stream");
+var moment = require("moment");
+var fs = require("fs");
+var encodings = ['utf8', 'json'];
+var levels = ['trace', 'debug', 'info', 'warn', 'error'];
+var Logger = /** @class */ (function () {
+    function Logger(encoding, level) {
+        if (encoding === void 0) { encoding = 'utf8'; }
+        if (level === void 0) { level = 'trace'; }
         // check level exists, then set it
         if (levels.indexOf(level) > -1) {
             this.level = level;
@@ -26,7 +42,12 @@ class Logger {
         this.SetLogStream(level);
     }
     // Sets logger output stream to a file
-    SetLogFile(fpath, level = this.level) {
+    Logger.prototype.SetLogFile = function (fpath, level) {
+        if (level === void 0) { level = this.level; }
+        if (levels.indexOf(level) < 0) {
+            console.log('invalid level');
+            return;
+        }
         this.level = level;
         var logFile;
         try {
@@ -81,9 +102,14 @@ class Logger {
         catch (err) {
             console.error('no access!');
         }
-    }
+    };
     // Set logger output to the IO stream
-    SetLogStream(level) {
+    Logger.prototype.SetLogStream = function (level) {
+        if (levels.indexOf(level) < 0) {
+            console.log('invalid level');
+            return;
+        }
+        this.level = level;
         // set logs base on level
         switch (this.level) {
             case 'trace': {
@@ -130,46 +156,37 @@ class Logger {
                 console.log("invalid log level");
             }
         }
-    }
+    };
     // Get encoding
-    GetEncoding() {
+    Logger.prototype.GetEncoding = function () {
         return this.encoding;
-    }
+    };
     // Set encoding
-    SetEncoding(type) {
+    Logger.prototype.SetEncoding = function (type) {
         if (encodings.indexOf(type) > -1) {
             this.encoding = type;
         }
         else {
             console.log('invalid encoding');
         }
-    }
+    };
     // Get log level
-    GetLogLevel() {
+    Logger.prototype.GetLogLevel = function () {
         return this.level;
-    }
-    // Set log level to input
-    SetLogLevel(level) {
-        if (levels.indexOf(level) > -1) {
-            this.level = level;
-            this.SetLogStream(level);
-        }
-        else {
-            console.log('invalid level');
-        }
-    }
-    Log(msg) {
-        let encoding = this.encoding;
+    };
+    Logger.prototype.Log = function (msg) {
+        var encoding = this.encoding;
         this.Trace.Output(msg, encoding);
         this.Debug.Output(msg, encoding);
         this.Info.Output(msg, encoding);
         this.Warn.Output(msg, encoding);
         this.Error.Output(msg, encoding);
-    }
-}
-exports.default = Logger;
-class Log {
-    constructor(discard, level, stream, encoding) {
+    };
+    return Logger;
+}());
+exports["default"] = Logger;
+var Log = /** @class */ (function () {
+    function Log(discard, level, stream, encoding) {
         this.level = level;
         this.encoding = encoding;
         if (discard) {
@@ -180,24 +197,30 @@ class Log {
             // write to file
             this.out = stream;
         }
-        this.timestamp = moment().format("MM-DD-YYYY h:mm:ss");
-        this.prefix = this.timestamp + " " + level + " | ";
     }
-    Output(msg, encoding) {
+    Log.prototype.Output = function (msg, encoding) {
+        var timestamp = moment().format("MM-DD-YYYY h:mm:ss");
+        var prefix = timestamp + " " + this.level + " | ";
         switch (encoding) {
             case 'json': {
-                this.out.write("{\"timestamp\":" + "\"" + this.timestamp + "\",\"level\":\"" + this.level + "\",\"message\":" + "\"" + msg + "\"}\n");
+                this.out.write("{\"timestamp\":" + "\"" + timestamp + "\",\"level\":\"" + this.level + "\",\"message\":" + "\"" + msg + "\"}\n");
                 break;
             }
             default: {
-                this.out.write(this.prefix + msg + "\n");
+                this.out.write(prefix + msg + "\n");
             }
         }
-    }
-}
+    };
+    return Log;
+}());
 // for when we don't need to write to a file
-class DiscardStream extends stream.Writable {
-    _write(chunk, enc, next) {
-        // do nothing
+var DiscardStream = /** @class */ (function (_super) {
+    __extends(DiscardStream, _super);
+    function DiscardStream() {
+        return _super !== null && _super.apply(this, arguments) || this;
     }
-}
+    DiscardStream.prototype._write = function (chunk, enc, next) {
+        // do nothing
+    };
+    return DiscardStream;
+}(stream.Writable));
