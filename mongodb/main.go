@@ -3,6 +3,7 @@ package mongodb
 import (
 	//standard library
 	"errors"
+	"strings"
 	"time"
 	//t1cg library
 	"github.com/t1cg/util/apperror"
@@ -77,7 +78,7 @@ func GetSession(cn ConnectionInfo) (*mgo.Session, *apperror.AppInfo) {
 
 	//setup mongodb
 	mongoDialInfo := &mgo.DialInfo{
-		Addrs:    []string{cn.Host},
+		Addrs:    strings.Split(cn.Host, ","),
 		Database: cn.DBName,
 		Username: cn.User,
 		Password: cn.Pw,
