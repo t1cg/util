@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
 	//project library
 	"github.com/t1cg/util/logger"
 )
@@ -108,4 +109,24 @@ func (r *RunInfo) MeasureRuntime() {
 // SetEndTime function sets the end time of the run.
 func (r *RunInfo) SetEndTime(t time.Time) {
 	r.EndTime = t
+}
+
+// MeasureRuntime prints a string containing the runtime information. This call
+// should always be made as
+// 	defer runstat.MeasureRuntime(time.Now())
+//
+// If no name is provided, the logger will print out the name of the calling
+// function
+func MeasureRuntime(startTime time.Time, name ...string) {
+	endTime := time.Now()
+	var printName string
+
+	// Check if a name was provided, otherwise get name from trace
+	if name != nil {
+		printName = name[0]
+	} else {
+		printName = strings.Split(logger.GetFuncName(2), logger.SEPERATOR)[0]
+	}
+
+	logger.L.Perf.Printf("%v runtime[%v] on cpus[%d] ", strings.TrimSpace(printName), endTime.Sub(startTime), CPUCount)
 }

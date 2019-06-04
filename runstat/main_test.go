@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func TestMeasureRuntime(t *testing.T) {
+func TestRMeasureRuntime(t *testing.T) {
 
 	r := RunInfo{}
 	r.Name = "runstat test"
@@ -18,5 +18,12 @@ func TestMeasureRuntime(t *testing.T) {
 	time.Sleep(50 * time.Millisecond)
 
 	r.SetEndTime(time.Now())
+
+}
+
+func TestMeasureRuntime(t *testing.T) {
+
+	defer MeasureRuntime(time.Now())
+	time.Sleep(50 * time.Millisecond)
 
 }
