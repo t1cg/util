@@ -39,10 +39,11 @@ func Validate(token, signedKey string) (*T1CGClaims, error) {
 	return parsed.Claims.(*T1CGClaims), nil
 }
 
-func IssueToken(userID string, role int64, issuer string, tokenExpiry time.Time, signedKey string) (string, error) {
+func IssueToken(userID string, role int64, issuer string, tokenExpiry time.Time, signedKey string, data interface{}) (string, error) {
 	claims := T1CGClaims{
 		userID,
 		Role(role),
+		data,
 		jwt.StandardClaims{
 			ExpiresAt: tokenExpiry.Unix(),
 			Issuer:    issuer,

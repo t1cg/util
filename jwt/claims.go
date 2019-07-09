@@ -5,8 +5,9 @@ import (
 )
 
 type T1CGClaims struct {
-	UserID string `json:"userId"`
-	Role   Role   `json:"role"`
+	UserID string      `json:"userId"`
+	Role   Role        `json:"role"`
+	Data   interface{} `json:"data"`
 	jwt.StandardClaims
 }
 
